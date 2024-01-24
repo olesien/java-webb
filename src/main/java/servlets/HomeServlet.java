@@ -1,5 +1,6 @@
 package servlets;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,15 +14,13 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String name = "test";
+        req.setAttribute("name", name);
 
+        // Forward the request to the JSP file
+        RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/home.jsp");
+        dispatcher.forward(req, resp);
 
-        PrintWriter out = resp.getWriter();
-        out.println("<html>");
-        out.println("<head><title>Hello Servlet</title></head>");
-        out.println("<body>");
-        out.println("<h2>Hello from Java Servlet!</h2>");
-        out.println("</body>");
-        out.println("</html>");
         System.out.println("GET Request");
         System.out.println(req.getParameter("name"));
     }
