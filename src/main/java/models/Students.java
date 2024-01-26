@@ -3,11 +3,11 @@ package models;
 public class Students {
     private int id;
 
-    private String name;
+    public String name;
 
-    private String town;
+    public String town;
 
-    private String hobby;
+    public String hobby;
 
     public Students(int id, String name, String town, String hobby) {
         this.id = id;

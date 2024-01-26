@@ -24,6 +24,7 @@ public class HomeServlet extends HttpServlet {
         students.forEach(st -> System.out.println(st.getName()));
         String name = "test";
         req.setAttribute("name", name);
+        req.setAttribute("students", students);
 
         // Forward the request to the JSP file
         RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/home.jsp");
