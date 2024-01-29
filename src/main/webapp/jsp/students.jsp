@@ -3,11 +3,19 @@
 <%@ page import="models.Students" %>
 <html>
 <head>
-    <title>Hello <%= request.getAttribute("name") %> </title>
+    <title><%= request.getAttribute("name") %> </title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
     <body>
-                <h2>Hello <%= request.getAttribute("name") %> from Java Servlet!!!</h2>
+
+               <div class="header">
+                    <h2><%= request.getAttribute("name") %></h2>
+                    <nav>
+                        <a class="disabled" href="/students">Students</a>
+                        <a href="/courses">Courses</a>
+                        <a href="/student_courses">Student Courses</a>
+                    </nav>
+               </div>
                <%
                    ArrayList<Students> studentsList = (ArrayList<Students>) request.getAttribute("students");
                    if (studentsList != null && !studentsList.isEmpty()) {

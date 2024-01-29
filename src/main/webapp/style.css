@@ -13,3 +13,20 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.header a {
+   padding: 10px;
+}
+
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}

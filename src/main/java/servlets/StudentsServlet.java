@@ -10,24 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
-@WebServlet(urlPatterns = "/home")
-public class HomeServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/students")
+public class StudentsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         ArrayList<Students> students = SchoolAPI.getStudents();
-
-        students.forEach(st -> System.out.println(st.getName()));
-        String name = "test";
-        req.setAttribute("name", name);
+        req.setAttribute("name", "Students");
         req.setAttribute("students", students);
 
         // Forward the request to the JSP file
-        RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/home.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/students.jsp");
         dispatcher.forward(req, resp);
 
         System.out.println("GET Request");
