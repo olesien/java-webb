@@ -11,9 +11,9 @@
                <div class="header">
                     <h2><%= request.getAttribute("name") %></h2>
                     <nav>
-                        <a class="disabled" href="/students">Students</a>
+                        <a href="/students">Students</a>
                         <a href="/courses">Courses</a>
-                        <a href="/student_courses">Student Courses</a>
+                        <a class="disabled" href="/student_courses">Student Courses</a>
                     </nav>
                </div>
                <%
