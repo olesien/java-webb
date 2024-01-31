@@ -29,4 +29,20 @@ public class StudentsServlet extends HttpServlet {
         System.out.println("GET Request");
         System.out.println(req.getParameter("name"));
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("received post for students");
+        String name = req.getParameter("name");
+        String town = req.getParameter("town");
+        String hobby = req.getParameter("hobby");
+        Students addedStudent = SchoolAPI.addStudent(name, town, hobby);
+        if (addedStudent != null) {
+            resp.sendRedirect("/students?status=success");
+        } else {
+            resp.sendRedirect("/students?status=fail");
+        }
+
+
+    }
 }

@@ -2,6 +2,9 @@ CREATE SCHEMA `grit` ;
 
 CREATE USER 'grit'@'localhost';
 GRANT SELECT ON gritacademy.* To 'grit'@'localhost' IDENTIFIED BY 'grit';
+GRANT INSERT ON gritacademy.* To 'grit'@'localhost' IDENTIFIED BY 'grit';
+GRANT UPDATE ON gritacademy.* To 'grit'@'localhost' IDENTIFIED BY 'grit';
+GRANT DELETE ON gritacademy.* To 'grit'@'localhost' IDENTIFIED BY 'grit';
 
 CREATE TABLE students (
    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,

@@ -37,5 +37,18 @@
                <% } else { %>
                No students found.
                <% } %>
+               <br>
+               <form action="/students" method="POST">
+                 <label for="name">Name:</label><br>
+                 <input type="text" id="name" name="name"><br>
+
+                  <label for="town">Town:</label><br>
+                  <input type="text" id="town" name="town"><br>
+
+                  <label for="hobby">Hobby:</label><br>
+                  <input type="text" id="hobby" name="hobby"><br>
+                 <input type="submit" value="Submit">
+               </form>
+
     </body>
 </html>

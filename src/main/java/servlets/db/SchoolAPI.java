@@ -4,6 +4,7 @@ import models.Courses;
 import models.Students;
 import models.StudentsWithCourses;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -81,5 +82,33 @@ public class SchoolAPI {
             Database.PrintSQLException(ex);
         }
         return studentsWithCourses;
+    }
+
+    public static Students addStudent(String name, String town, String hobby) {
+        try {
+            String query = "INSERT INTO students (name, town, hobby) VALUES (?, ?, ?)";
+            System.out.println(query);
+            PreparedStatement ps = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, name);
+            ps.setString(2, town);
+            ps.setString(3, hobby);
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    Students student = new Students((int) generatedKeys.getLong(1), name, town, hobby);
+                    return student;
+                }
+                else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
+        } catch(SQLException ex) {
+            Database.PrintSQLException(ex);
+        }
+        return null;
     }
 }
