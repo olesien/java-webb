@@ -17,9 +17,16 @@
                     </nav>
                </div>
                <%
+                   String status = request.getParameter("status");
+                   if (status != null) {
+               %>
+                  <p class="status"><%= status %></p>
+               <% } %>
+               <%
                    ArrayList<Students> studentsList = (ArrayList<Students>) request.getAttribute("students");
                    if (studentsList != null && !studentsList.isEmpty()) {
                %>
+
                <table>
                    <tr>
                        <th>Name</th>
