@@ -30,4 +30,18 @@ public class CoursesServlet extends HttpServlet {
         System.out.println("GET Request");
         System.out.println(req.getParameter("name"));
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("received post for courses");
+        String name = req.getParameter("name");
+        String description = req.getParameter("description");
+        String yhp = req.getParameter("yhp");
+        Courses addedCourse = SchoolAPI.addCourse(name, description, Integer.valueOf(yhp));
+        if (addedCourse != null) {
+            resp.sendRedirect("/courses?status=success");
+        } else {
+            resp.sendRedirect("/courses?status=fail");
+        }
+    }
 }

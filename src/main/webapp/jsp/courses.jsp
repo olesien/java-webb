@@ -17,6 +17,12 @@
                     </nav>
                </div>
                <%
+                  String status = request.getParameter("status");
+                  if (status != null) {
+                  %>
+                   <p class="status"><%= status %></p>
+               <% } %>
+               <%
                    ArrayList<Courses> courseList = (ArrayList<Courses>) request.getAttribute("courses");
                    if (courseList != null && !courseList.isEmpty()) {
                %>
@@ -37,5 +43,17 @@
                <% } else { %>
                 No courses found.
                <% } %>
+                 <br>
+                    <form action="/courses" method="POST">
+                      <label for="name">Name:</label><br>
+                      <input type="text" id="name" name="name"><br>
+
+                       <label for="description">Description:</label><br>
+                       <input type="text" id="description" name="description"><br>
+
+                       <label for="yhp">YHP:</label><br>
+                       <input type="number" id="yhp" name="yhp"><br>
+                      <input type="submit" value="Submit">
+                    </form>
     </body>
 </html>

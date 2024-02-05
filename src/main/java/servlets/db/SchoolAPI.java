@@ -99,8 +99,34 @@ public class SchoolAPI {
 
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    Students student = new Students((int) generatedKeys.getLong(1), name, town, hobby);
-                    return student;
+                    return new Students((int) generatedKeys.getLong(1), name, town, hobby);
+                }
+                else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
+        } catch(SQLException ex) {
+            Database.PrintSQLException(ex);
+        }
+        return null;
+    }
+
+    public static Courses addCourse(String name, String description, Integer yhp) {
+        try {
+            String query = "INSERT INTO courses (name, description, yhp) VALUES (?, ?, ?)";
+            System.out.println(query);
+            PreparedStatement ps = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, name);
+            ps.setString(2, description);
+            ps.setInt(3, yhp);
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return new Courses((int) generatedKeys.getLong(1), name, description, yhp);
                 }
                 else {
                     throw new SQLException("Creating user failed, no ID obtained.");

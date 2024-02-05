@@ -42,7 +42,5 @@ public class StudentsServlet extends HttpServlet {
         } else {
             resp.sendRedirect("/students?status=fail");
         }
-
-
     }
 }
