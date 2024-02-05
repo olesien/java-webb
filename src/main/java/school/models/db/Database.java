@@ -1,4 +1,4 @@
-package school.servlets.db;
+package school.models.db;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 

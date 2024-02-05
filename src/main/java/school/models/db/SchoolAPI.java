@@ -1,4 +1,4 @@
-package school.servlets.db;
+package school.models.db;
 
 import school.models.Courses;
 import school.models.Students;

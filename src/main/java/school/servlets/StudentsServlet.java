@@ -1,7 +1,7 @@
 package school.servlets;
 
 import school.models.Students;
-import school.servlets.db.SchoolAPI;
+import school.models.db.SchoolAPI;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
