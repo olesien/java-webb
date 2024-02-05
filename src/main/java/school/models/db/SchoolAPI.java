@@ -121,7 +121,7 @@ public class SchoolAPI {
             ps.setInt(3, yhp);
             int affectedRows = ps.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException("Creating user failed, no rows affected.");
+                throw new SQLException("Creating course failed, no rows affected.");
             }
 
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
@@ -129,12 +129,38 @@ public class SchoolAPI {
                     return new Courses((int) generatedKeys.getLong(1), name, description, yhp);
                 }
                 else {
-                    throw new SQLException("Creating user failed, no ID obtained.");
+                    throw new SQLException("Creating course failed, no ID obtained.");
                 }
             }
         } catch(SQLException ex) {
             Database.PrintSQLException(ex);
         }
         return null;
+    }
+    public static boolean addStudentCourseRelation(Integer student_id, Integer course_id) {
+        try {
+            String query = "INSERT INTO attendance (student_id, course_id) VALUES (?, ?)";
+            System.out.println(query);
+            PreparedStatement ps = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, student_id);
+            ps.setInt(2, course_id);
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating relation failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    //return new StudentsWithCourses((int) generatedKeys.getLong(1), name, description, yhp);
+                    return true;
+                }
+                else {
+                    throw new SQLException("Creating relation failed, no ID obtained.");
+                }
+            }
+        } catch(SQLException ex) {
+            Database.PrintSQLException(ex);
+        }
+        return false;
     }
 }
