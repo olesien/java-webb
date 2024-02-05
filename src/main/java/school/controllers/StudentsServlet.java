@@ -1,4 +1,4 @@
-package school.servlets;
+package school.controllers;
 
 import school.models.Students;
 import school.models.db.SchoolAPI;
