@@ -1,13 +1,13 @@
 C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\java-webb\src\main\java
 C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\java-webb\src\main\resources
 C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\java-webb\src\main\webapp
-C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\java-webb\src\main\java\models
+C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\java-webb\src\main\java\org.example.project1.models
 C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\java-webb\src\main\java\org
-C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\java-webb\src\main\java\servlets
+C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\java-webb\src\main\java\org.example.project1.servlets
 C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\java-webb\src\main\java\org\example
 C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\java-webb\src\main\java\org\example\project1
 C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\java-webb\src\main\java\org\example\project1\resources
-C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\java-webb\src\main\java\servlets\db
+C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\java-webb\src\main\java\org.example.project1.servlets\db
 C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\java-webb\src\main\resources\META-INF
 C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\java-webb\src\main\webapp\jsp
 C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps\java-webb\src\main\webapp\WEB-INF

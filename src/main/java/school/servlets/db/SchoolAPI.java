@@ -1,8 +1,8 @@
-package servlets.db;
+package school.servlets.db;
 
-import models.Courses;
-import models.Students;
-import models.StudentsWithCourses;
+import school.models.Courses;
+import school.models.Students;
+import school.models.StudentsWithCourses;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

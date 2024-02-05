@@ -1,7 +1,7 @@
-package servlets;
+package school.servlets;
 
-import models.Students;
-import servlets.db.SchoolAPI;
+import school.models.Students;
+import school.servlets.db.SchoolAPI;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

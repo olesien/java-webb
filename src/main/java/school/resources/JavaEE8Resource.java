@@ -1,4 +1,4 @@
-package org.example.project1.resources;
+package school.resources;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

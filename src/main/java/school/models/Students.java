@@ -1,4 +1,4 @@
-package models;
+package school.models;
 
 public class Students {
     private int id;

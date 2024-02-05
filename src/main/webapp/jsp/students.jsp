@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="models.Students" %>
+<%@ page import="school.models.Students" %>
 <html>
 <head>
     <title><%= request.getAttribute("name") %> </title>

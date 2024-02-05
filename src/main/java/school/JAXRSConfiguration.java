@@ -1,4 +1,4 @@
-package org.example.project1;
+package school;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
