@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @WebServlet(urlPatterns = "/students")
@@ -18,7 +19,12 @@ public class StudentsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ArrayList<Students> students = SchoolAPI.getStudents();
+        ArrayList<Students> students = null;
+        try {
+            students = SchoolAPI.getStudents();
+        } catch (SQLException e) {
+            throw new ServletException(e.getMessage());
+        }
         req.setAttribute("name", "Students");
         req.setAttribute("students", students);
 
@@ -36,7 +42,12 @@ public class StudentsServlet extends HttpServlet {
         String name = req.getParameter("name");
         String town = req.getParameter("town");
         String hobby = req.getParameter("hobby");
-        Students addedStudent = SchoolAPI.addStudent(name, town, hobby);
+        Students addedStudent = null;
+        try {
+            addedStudent = SchoolAPI.addStudent(name, town, hobby);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         if (addedStudent != null) {
             resp.sendRedirect("/students?status=success");
         } else {

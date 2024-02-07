@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @WebServlet(urlPatterns = "/courses")
@@ -19,7 +20,12 @@ public class CoursesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ArrayList<Courses> courses = SchoolAPI.getCourses();
+        ArrayList<Courses> courses = null;
+        try {
+            courses = SchoolAPI.getCourses();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         req.setAttribute("name", "Courses");
         req.setAttribute("courses", courses);
 
@@ -37,7 +43,12 @@ public class CoursesServlet extends HttpServlet {
         String name = req.getParameter("name");
         String description = req.getParameter("description");
         String yhp = req.getParameter("yhp");
-        Courses addedCourse = SchoolAPI.addCourse(name, description, Integer.valueOf(yhp));
+        Courses addedCourse = null;
+        try {
+            addedCourse = SchoolAPI.addCourse(name, description, Integer.valueOf(yhp));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         if (addedCourse != null) {
             resp.sendRedirect("/courses?status=success");
         } else {

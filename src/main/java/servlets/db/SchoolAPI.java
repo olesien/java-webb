@@ -14,9 +14,8 @@ public class SchoolAPI {
 
     private SchoolAPI() { }
 
-    public static ArrayList<Students> getStudents() {
+    public static ArrayList<Students> getStudents() throws SQLException {
         ArrayList<Students> students = new ArrayList<>();
-        try {
             Statement statement = Database.getConnection().createStatement();
             String query = "SELECT * FROM students";
             System.out.println(query);
@@ -31,15 +30,11 @@ public class SchoolAPI {
 
                 students.add(student);
             }
-        } catch(SQLException ex) {
-            Database.PrintSQLException(ex);
-        }
         return students;
     }
 
-    public static ArrayList<Courses> getCourses() {
+    public static ArrayList<Courses> getCourses() throws SQLException {
         ArrayList<Courses> courses = new ArrayList<>();
-        try {
             Statement statement = Database.getConnection().createStatement();
             String query = "SELECT * FROM courses";
             System.out.println(query);
@@ -54,15 +49,11 @@ public class SchoolAPI {
 
                 courses.add(course);
             }
-        } catch(SQLException ex) {
-            Database.PrintSQLException(ex);
-        }
         return courses;
     }
 
-    public static ArrayList<StudentsWithCourses> getStudentsWithCourses() {
+    public static ArrayList<StudentsWithCourses> getStudentsWithCourses() throws SQLException {
         ArrayList<StudentsWithCourses> studentsWithCourses = new ArrayList<>();
-        try {
             Statement statement = Database.getConnection().createStatement();
             String query = "SELECT s.id, s.name, s.town, s.hobby, IFNULL(GROUP_CONCAT(c.name SEPARATOR ', '), '') as courselist FROM students s LEFT JOIN attendance a ON s.id = a.student_id LEFT JOIN courses c ON c.id = a.course_id GROUP BY s.id";
             System.out.println(query);
@@ -78,14 +69,10 @@ public class SchoolAPI {
 
                 studentsWithCourses.add(studentsWithCourse);
             }
-        } catch(SQLException ex) {
-            Database.PrintSQLException(ex);
-        }
         return studentsWithCourses;
     }
 
-    public static Students addStudent(String name, String town, String hobby) {
-        try {
+    public static Students addStudent(String name, String town, String hobby) throws SQLException {
             String query = "INSERT INTO students (name, town, hobby) VALUES (?, ?, ?)";
             System.out.println(query);
             PreparedStatement ps = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -105,14 +92,9 @@ public class SchoolAPI {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
             }
-        } catch(SQLException ex) {
-            Database.PrintSQLException(ex);
-        }
-        return null;
     }
 
-    public static Courses addCourse(String name, String description, Integer yhp) {
-        try {
+    public static Courses addCourse(String name, String description, Integer yhp) throws SQLException {
             String query = "INSERT INTO courses (name, description, yhp) VALUES (?, ?, ?)";
             System.out.println(query);
             PreparedStatement ps = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -132,9 +114,5 @@ public class SchoolAPI {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
             }
-        } catch(SQLException ex) {
-            Database.PrintSQLException(ex);
-        }
-        return null;
     }
 }
