@@ -9,14 +9,16 @@
     <body>
 
                <div class="header">
-                    <h2><%= request.getAttribute("name") %></h2>
+                    <h2>Error</h2>
                     <nav>
                         <a class="disabled" href="/students">Students</a>
                         <a href="/courses">Courses</a>
                         <a href="/student_courses">Student Courses</a>
                     </nav>
                </div>
-               <%= request.getAttribute("message") %>
+               <div>
+                    <p class="error"><%= request.getAttribute("code") %> - <%=request.getAttribute("message") %></p>
+               </div>
 
     </body>
 </html>

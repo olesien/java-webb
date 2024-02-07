@@ -30,3 +30,32 @@ a.disabled {
   pointer-events: none;
   cursor: default;
 }
+
+form {
+   padding: 1rem;
+}
+
+form label {
+   display: inline-block;
+   padding: 0.8rem 0.4rem;
+}
+
+form input {
+   padding: 0.5rem 1rem;
+}
+
+form input[type=submit] {
+   padding: 0.75rem 1.5rem;
+   font-size: 1.1em;
+   margin-top: 1rem;
+   background: #3C59FF;
+   color: #FFF;
+   border-radius: 5px;
+}
+
+.error {
+   font-size: 1.5em;
+   color: red;
+   padding: 1rem;
+   text-align: center;
+}
