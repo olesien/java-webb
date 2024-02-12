@@ -84,8 +84,7 @@ public class SchoolAPI {
         return studentsWithCourses;
     }
 
-    public static Students addStudent(String name, String town, String hobby) {
-        try {
+    public static Students addStudent(String name, String town, String hobby) throws SQLException {
             String query = "INSERT INTO students (name, town, hobby) VALUES (?, ?, ?)";
             System.out.println(query);
             PreparedStatement ps = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -105,14 +104,9 @@ public class SchoolAPI {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
             }
-        } catch(SQLException ex) {
-            Database.PrintSQLException(ex);
-        }
-        return null;
     }
 
-    public static Courses addCourse(String name, String description, Integer yhp) {
-        try {
+    public static Courses addCourse(String name, String description, Integer yhp) throws SQLException {
             String query = "INSERT INTO courses (name, description, yhp) VALUES (?, ?, ?)";
             System.out.println(query);
             PreparedStatement ps = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -132,13 +126,9 @@ public class SchoolAPI {
                     throw new SQLException("Creating course failed, no ID obtained.");
                 }
             }
-        } catch(SQLException ex) {
-            Database.PrintSQLException(ex);
-        }
-        return null;
+
     }
-    public static boolean addStudentCourseRelation(Integer student_id, Integer course_id) {
-        try {
+    public static void addStudentCourseRelation(Integer student_id, Integer course_id) throws SQLException {
             String query = "INSERT INTO attendance (student_id, course_id) VALUES (?, ?)";
             System.out.println(query);
             PreparedStatement ps = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -151,15 +141,11 @@ public class SchoolAPI {
 
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    return true;
+                   return;
                 }
                 else {
                     throw new SQLException("Creating relation failed, no ID obtained.");
                 }
             }
-        } catch(SQLException ex) {
-            Database.PrintSQLException(ex);
-        }
-        return false;
     }
 }

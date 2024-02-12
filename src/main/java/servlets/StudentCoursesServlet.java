@@ -42,11 +42,11 @@ public class StudentCoursesServlet extends HttpServlet {
         System.out.println("received post for course+student relation");
         Integer student_id = Integer.valueOf(req.getParameter("student"));
         Integer course_id = Integer.valueOf(req.getParameter("course"));
-        boolean addedStudentCourseRelation= SchoolAPI.addStudentCourseRelation(student_id, course_id);
-        if (addedStudentCourseRelation == true) {
+        try {
+            SchoolAPI.addStudentCourseRelation(student_id, course_id);
             resp.sendRedirect("/student_courses?status=success");
-        } else {
-            resp.sendRedirect("/student_courses?status=fail");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }
