@@ -14,8 +14,9 @@ public class SchoolAPI {
 
     private SchoolAPI() { }
 
-    public static ArrayList<Students> getStudents() throws SQLException {
+    public static ArrayList<Students> getStudents() {
         ArrayList<Students> students = new ArrayList<>();
+        try {
             Statement statement = Database.getConnection().createStatement();
             String query = "SELECT * FROM students";
             System.out.println(query);
@@ -30,11 +31,15 @@ public class SchoolAPI {
 
                 students.add(student);
             }
+        } catch(SQLException ex) {
+            Database.PrintSQLException(ex);
+        }
         return students;
     }
 
-    public static ArrayList<Courses> getCourses() throws SQLException {
+    public static ArrayList<Courses> getCourses() {
         ArrayList<Courses> courses = new ArrayList<>();
+        try {
             Statement statement = Database.getConnection().createStatement();
             String query = "SELECT * FROM courses";
             System.out.println(query);
@@ -49,11 +54,15 @@ public class SchoolAPI {
 
                 courses.add(course);
             }
+        } catch(SQLException ex) {
+            Database.PrintSQLException(ex);
+        }
         return courses;
     }
 
-    public static ArrayList<StudentsWithCourses> getStudentsWithCourses() throws SQLException {
+    public static ArrayList<StudentsWithCourses> getStudentsWithCourses() {
         ArrayList<StudentsWithCourses> studentsWithCourses = new ArrayList<>();
+        try {
             Statement statement = Database.getConnection().createStatement();
             String query = "SELECT s.id, s.name, s.town, s.hobby, IFNULL(GROUP_CONCAT(c.name SEPARATOR ', '), '') as courselist FROM students s LEFT JOIN attendance a ON s.id = a.student_id LEFT JOIN courses c ON c.id = a.course_id GROUP BY s.id";
             System.out.println(query);
@@ -69,10 +78,14 @@ public class SchoolAPI {
 
                 studentsWithCourses.add(studentsWithCourse);
             }
+        } catch(SQLException ex) {
+            Database.PrintSQLException(ex);
+        }
         return studentsWithCourses;
     }
 
-    public static Students addStudent(String name, String town, String hobby) throws SQLException {
+    public static Students addStudent(String name, String town, String hobby) {
+        try {
             String query = "INSERT INTO students (name, town, hobby) VALUES (?, ?, ?)";
             System.out.println(query);
             PreparedStatement ps = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -92,9 +105,14 @@ public class SchoolAPI {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
             }
+        } catch(SQLException ex) {
+            Database.PrintSQLException(ex);
+        }
+        return null;
     }
 
-    public static Courses addCourse(String name, String description, Integer yhp) throws SQLException {
+    public static Courses addCourse(String name, String description, Integer yhp) {
+        try {
             String query = "INSERT INTO courses (name, description, yhp) VALUES (?, ?, ?)";
             System.out.println(query);
             PreparedStatement ps = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -103,7 +121,7 @@ public class SchoolAPI {
             ps.setInt(3, yhp);
             int affectedRows = ps.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException("Creating user failed, no rows affected.");
+                throw new SQLException("Creating course failed, no rows affected.");
             }
 
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
@@ -111,8 +129,38 @@ public class SchoolAPI {
                     return new Courses((int) generatedKeys.getLong(1), name, description, yhp);
                 }
                 else {
-                    throw new SQLException("Creating user failed, no ID obtained.");
+                    throw new SQLException("Creating course failed, no ID obtained.");
                 }
             }
+        } catch(SQLException ex) {
+            Database.PrintSQLException(ex);
+        }
+        return null;
+    }
+    public static boolean addStudentCourseRelation(Integer student_id, Integer course_id) {
+        try {
+            String query = "INSERT INTO attendance (student_id, course_id) VALUES (?, ?)";
+            System.out.println(query);
+            PreparedStatement ps = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, student_id);
+            ps.setInt(2, course_id);
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating relation failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    //return new StudentsWithCourses((int) generatedKeys.getLong(1), name, description, yhp);
+                    return true;
+                }
+                else {
+                    throw new SQLException("Creating relation failed, no ID obtained.");
+                }
+            }
+        } catch(SQLException ex) {
+            Database.PrintSQLException(ex);
+        }
+        return false;
     }
 }

@@ -19,12 +19,7 @@ public class StudentsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ArrayList<Students> students = null;
-        try {
-            students = SchoolAPI.getStudents();
-        } catch (SQLException e) {
-            throw new ServletException(e.getMessage());
-        }
+        ArrayList<Students> students = SchoolAPI.getStudents();
         req.setAttribute("name", "Students");
         req.setAttribute("students", students);
 
@@ -33,7 +28,6 @@ public class StudentsServlet extends HttpServlet {
         dispatcher.forward(req, resp);
 
         System.out.println("GET Request");
-        System.out.println(req.getParameter("name"));
     }
 
     @Override
@@ -42,12 +36,7 @@ public class StudentsServlet extends HttpServlet {
         String name = req.getParameter("name");
         String town = req.getParameter("town");
         String hobby = req.getParameter("hobby");
-        Students addedStudent = null;
-        try {
-            addedStudent = SchoolAPI.addStudent(name, town, hobby);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        Students addedStudent = SchoolAPI.addStudent(name, town, hobby);
         if (addedStudent != null) {
             resp.sendRedirect("/students?status=success");
         } else {
@@ -55,3 +44,4 @@ public class StudentsServlet extends HttpServlet {
         }
     }
 }
+
