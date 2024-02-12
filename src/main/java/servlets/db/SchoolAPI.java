@@ -151,7 +151,6 @@ public class SchoolAPI {
 
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    //return new StudentsWithCourses((int) generatedKeys.getLong(1), name, description, yhp);
                     return true;
                 }
                 else {

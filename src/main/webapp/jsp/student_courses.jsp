@@ -18,6 +18,12 @@
                         <a class="disabled" href="/student_courses">Student Courses</a>
                     </nav>
                </div>
+                   <%
+                       String status = request.getParameter("status");
+                       if (status != null) {
+                   %>
+                      <p class="status"><%= status %></p>
+                   <% } %>
                <%
                    ArrayList<StudentsWithCourses> studentsWithCoursesList = (ArrayList<StudentsWithCourses>) request.getAttribute("students_with_courses");
                    if (studentsWithCoursesList != null && !studentsWithCoursesList.isEmpty()) {

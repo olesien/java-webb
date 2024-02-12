@@ -43,7 +43,7 @@ public class StudentCoursesServlet extends HttpServlet {
         Integer student_id = Integer.valueOf(req.getParameter("student"));
         Integer course_id = Integer.valueOf(req.getParameter("course"));
         boolean addedStudentCourseRelation= SchoolAPI.addStudentCourseRelation(student_id, course_id);
-        if (addedStudentCourseRelation == false) {
+        if (addedStudentCourseRelation == true) {
             resp.sendRedirect("/student_courses?status=success");
         } else {
             resp.sendRedirect("/student_courses?status=fail");
