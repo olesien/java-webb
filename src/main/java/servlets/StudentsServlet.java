@@ -33,11 +33,12 @@ public class StudentsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         System.out.println("received post for students");
-        String name = req.getParameter("name");
+        String fname = req.getParameter("fname");
+        String lname = req.getParameter("lname");
         String town = req.getParameter("town");
         String hobby = req.getParameter("hobby");
         try {
-            SchoolAPI.addStudent(name, town, hobby);
+            SchoolAPI.addStudent(fname + " " + lname, town, hobby);
             resp.sendRedirect("/students?status=success");
         } catch (SQLException e) {
             throw new RuntimeException(e);

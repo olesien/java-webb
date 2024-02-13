@@ -48,8 +48,11 @@
                <% } %>
                <br>
                <form action="/students" method="POST">
-                 <label for="name">Name:</label><br>
-                 <input type="text" id="name" name="name" required minlength="2"><br>
+                 <label for="fname">First Name:</label><br>
+                 <input type="text" id="fname" name="fname" required minlength="2"><br>
+
+                 <label for="lname">Last Name:</label><br>
+                 <input type="text" id="lname" name="lname" required minlength="2"><br>
 
                   <label for="town">Town:</label><br>
                   <input type="text" id="town" name="town" required minlength="2"><br>
