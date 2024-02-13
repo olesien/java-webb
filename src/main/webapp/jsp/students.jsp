@@ -29,12 +29,14 @@
 
                <table>
                    <tr>
+                       <th>Id</th>
                        <th>Name</th>
                        <th>Town</th>
                        <th>Hobby</th>
                    </tr>
                    <% for (Students student : studentsList) { %>
                    <tr>
+                       <td>#<%= student.getId() %></td>
                        <td><%= student.getName() %></td>
                        <td><%= student.getTown() %></td>
                        <td><%= student.getHobby() %></td>

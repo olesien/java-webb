@@ -60,7 +60,7 @@
                                               <select name="student" id="student-select">
                                                 <option value="">Select Student</option>
                                                  <% for (Students student : students) { %>
-                                                     <option value="<%= student.getId() %>"><%= student.getName() %></option>
+                                                     <option value="<%= student.getId() %>"><%= student.getId() %>. <%= student.getName() %></option>
                                                  <% } %>
                                               </select>
                                               <label for="course-select">Choose a course:</label>
