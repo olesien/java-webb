@@ -46,13 +46,13 @@
                  <br>
                     <form action="/courses" method="POST">
                       <label for="name">Name:</label><br>
-                      <input type="text" id="name" name="name"><br>
+                      <input type="text" id="name" name="name" required minlength="2"><br>
 
                        <label for="description">Description:</label><br>
-                       <input type="text" id="description" name="description"><br>
+                       <input type="text" id="description" name="description" required minlength="2"><br>
 
                        <label for="yhp">YHP:</label><br>
-                       <input type="number" id="yhp" name="yhp"><br>
+                       <input type="number" id="yhp" name="yhp" required min="1"><br>
                       <input type="submit" value="Submit">
                     </form>
     </body>

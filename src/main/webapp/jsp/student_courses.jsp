@@ -57,7 +57,7 @@
                                          <form action="/student_courses" method="POST">
                                               <label for="student-select">Choose a student:</label>
 
-                                              <select name="student" id="student-select">
+                                              <select name="student" id="student-select" required>
                                                 <option value="">Select Student</option>
                                                  <% for (Students student : students) { %>
                                                      <option value="<%= student.getId() %>"><%= student.getId() %>. <%= student.getName() %></option>
@@ -65,7 +65,7 @@
                                               </select>
                                               <label for="course-select">Choose a course:</label>
 
-                                              <select name="course" id="course-select">
+                                              <select name="course" id="course-select" required>
                                                 <option value="">Select Course</option>
                                                  <% for (Courses course : courses) { %>
                                                      <option value="<%= course.getId() %>"><%= course.getName() %></option>

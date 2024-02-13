@@ -49,13 +49,13 @@
                <br>
                <form action="/students" method="POST">
                  <label for="name">Name:</label><br>
-                 <input type="text" id="name" name="name"><br>
+                 <input type="text" id="name" name="name" required minlength="2"><br>
 
                   <label for="town">Town:</label><br>
-                  <input type="text" id="town" name="town"><br>
+                  <input type="text" id="town" name="town" required minlength="2"><br>
 
                   <label for="hobby">Hobby:</label><br>
-                  <input type="text" id="hobby" name="hobby"><br>
+                  <input type="text" id="hobby" name="hobby" required minlength="2"><br>
                  <input type="submit" value="Submit">
                </form>
 
