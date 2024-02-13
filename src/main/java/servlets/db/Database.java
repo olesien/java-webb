@@ -10,10 +10,10 @@ public class Database {
         servlets.db.Database Configuration
      */
     static String url = "localhost";
-    static int port = 3310;
-    static String database = "grit";
-    static String username = "root";
-    static String password = "your_strong_pass";
+    static int port = 3307;
+    static String database = "gritacademy";
+    static String username = "grit";
+    static String password = "grit";
 
     /*
         Private variables
