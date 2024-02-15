@@ -34,3 +34,32 @@ CREATE TABLE attendance (
 );
 
 INSERT INTO attendance (student_id, course_id) VALUES (1,2);
+
+#TRUNCATE students;
+
+ALTER TABLE students ADD COLUMN lname VARCHAR(100) NOT NULL;
+ALTER TABLE students DROP COLUMN name;
+ALTER TABLE students ADD COLUMN fname VARCHAR(100) NOT NULL;
+ALTER TABLE students ADD COLUMN email VARCHAR(100) NOT NULL;
+ALTER TABLE students ADD COLUMN phone VARCHAR(100) NOT NULL;
+ALTER TABLE students ADD COLUMN username VARCHAR(100) NOT NULL;
+ALTER TABLE students ADD COLUMN password VARCHAR(255) NOT NULL;
+
+CREATE TABLE teachers (
+   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   fname VARCHAR(100) NOT NULL,
+   lname VARCHAR(100) NOT NULL,
+   town VARCHAR(100) NOT NULL,
+   hobby TEXT,
+   email VARCHAR(100) NOT NULL,
+   phone VARCHAR(100) NOT NULL,
+   username VARCHAR(100) NOT NULL,
+   password VARCHAR(255) NOT NULL,
+   privilage_type ENUM("user", "admin", "superadmin") NOT NULL DEFAULT "user"
+);
+
+CREATE TABLE teacher_courses (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    teachers_id INT NOT NULL REFERENCES teachers(id),
+    course_id INT NOT NULL REFERENCES courses(id)
+);
