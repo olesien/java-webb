@@ -1,9 +1,12 @@
 package models;
 
-public class StudentsWithCourses {
+import java.io.Serializable;
+
+public class StudentsWithCourses implements Serializable {
     private int id;
 
-    public String name;
+    public String fname;
+    public String lname;
 
     public String town;
 
@@ -11,31 +14,54 @@ public class StudentsWithCourses {
 
     public String courses;
 
-    public StudentsWithCourses(int id, String name, String town, String hobby, String courses) {
-        this.id = id;
-        this.name = name;
-        this.town = town;
-        this.hobby = hobby;
-        this.courses = courses;
+    public StudentsWithCourses() {
     }
 
     public int getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
     }
 
     public String getTown() {
         return town;
     }
 
+    public void setTown(String town) {
+        this.town = town;
+    }
+
     public String getHobby() {
         return hobby;
     }
 
+    public void setHobby(String hobby) {
+        this.hobby = hobby;
+    }
+
     public String getCourses() {
         return courses;
+    }
+
+    public void setCourses(String courses) {
+        this.courses = courses;
     }
 }

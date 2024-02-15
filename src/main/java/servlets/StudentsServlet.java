@@ -38,7 +38,7 @@ public class StudentsServlet extends HttpServlet {
         String town = req.getParameter("town");
         String hobby = req.getParameter("hobby");
         try {
-            SchoolAPI.addStudent(fname + " " + lname, town, hobby);
+            SchoolAPI.addStudent(fname,lname, town, hobby);
             resp.sendRedirect("/students?status=success");
         } catch (SQLException e) {
             throw new RuntimeException(e);

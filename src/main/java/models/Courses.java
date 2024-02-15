@@ -1,6 +1,8 @@
 package models;
 
-public class Courses {
+import java.io.Serializable;
+
+public class Courses implements Serializable {
     private int id;
 
     public String name;
@@ -9,11 +11,7 @@ public class Courses {
 
     public int yhp;
 
-    public Courses(int id, String name, String description, int yhp) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.yhp = yhp;
+    public Courses() {
     }
 
     public int getId() {
@@ -30,6 +28,22 @@ public class Courses {
 
     public int getYhp() {
         return yhp;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setYhp(int yhp) {
+        this.yhp = yhp;
     }
 }
 

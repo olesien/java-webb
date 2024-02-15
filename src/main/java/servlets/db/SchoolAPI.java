@@ -23,11 +23,12 @@ public class SchoolAPI {
             ResultSet result = statement.executeQuery(query);
             while (result.next()) {
 
-                Students student = new Students(
-                        result.getInt("id"),
-                        result.getString("name"),
-                        result.getString("town"),
-                        result.getString("hobby"));
+                Students student = new Students();
+                student.setId(result.getInt("id"));
+                student.setFname(result.getString("fname"));
+                student.setLname(result.getString("lname"));
+                student.setTown(result.getString("town"));
+                student.setHobby(result.getString("hobby"));
 
                 students.add(student);
             }
@@ -46,11 +47,11 @@ public class SchoolAPI {
             ResultSet result = statement.executeQuery(query);
             while (result.next()) {
 
-                Courses course = new Courses(
-                        result.getInt("id"),
-                        result.getString("name"),
-                        result.getString("description"),
-                        result.getInt("yhp"));
+                Courses course = new Courses();
+                course.setId( result.getInt("id"));
+                course.setName( result.getString("name"));
+                course.setDescription( result.getString("description"));
+                course.setYhp( result.getInt("yhp"));
 
                 courses.add(course);
             }
@@ -64,17 +65,18 @@ public class SchoolAPI {
         ArrayList<StudentsWithCourses> studentsWithCourses = new ArrayList<>();
         try {
             Statement statement = Database.getConnection().createStatement();
-            String query = "SELECT s.id, s.name, s.town, s.hobby, IFNULL(GROUP_CONCAT(c.name SEPARATOR ', '), '') as courselist FROM students s LEFT JOIN attendance a ON s.id = a.student_id LEFT JOIN courses c ON c.id = a.course_id GROUP BY s.id";
+            String query = "SELECT s.id, s.fname, s.lname, s.town, s.hobby, IFNULL(GROUP_CONCAT(c.name SEPARATOR ', '), '') as courselist FROM students s LEFT JOIN attendance a ON s.id = a.student_id LEFT JOIN courses c ON c.id = a.course_id GROUP BY s.id";
             System.out.println(query);
             ResultSet result = statement.executeQuery(query);
             while (result.next()) {
 
-                StudentsWithCourses studentsWithCourse = new StudentsWithCourses(
-                        result.getInt("id"),
-                        result.getString("name"),
-                        result.getString("town"),
-                        result.getString("hobby"),
-                        result.getString("courselist"));
+                StudentsWithCourses studentsWithCourse = new StudentsWithCourses();
+                studentsWithCourse.setId(result.getInt("id"));
+                studentsWithCourse.setFname( result.getString("fname"));
+                studentsWithCourse.setLname( result.getString("lname"));
+                studentsWithCourse.setTown(result.getString("town"));
+                studentsWithCourse.setHobby(result.getString("hobby"));
+                studentsWithCourse.setCourses(result.getString("courselist"));
 
                 studentsWithCourses.add(studentsWithCourse);
             }
@@ -84,13 +86,14 @@ public class SchoolAPI {
         return studentsWithCourses;
     }
 
-    public static Students addStudent(String name, String town, String hobby) throws SQLException {
-            String query = "INSERT INTO students (name, town, hobby) VALUES (?, ?, ?)";
+    public static Students addStudent(String fname,String lname, String town, String hobby) throws SQLException {
+            String query = "INSERT INTO students (fname, lname, town, hobby) VALUES (?, ?, ?, ?)";
             System.out.println(query);
             PreparedStatement ps = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, name);
-            ps.setString(2, town);
-            ps.setString(3, hobby);
+            ps.setString(1, fname);
+            ps.setString(2, lname);
+            ps.setString(3, town);
+            ps.setString(4, hobby);
             int affectedRows = ps.executeUpdate();
             if (affectedRows == 0) {
                 throw new SQLException("Creating user failed, no rows affected.");
@@ -98,7 +101,14 @@ public class SchoolAPI {
 
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    return new Students((int) generatedKeys.getLong(1), name, town, hobby);
+                    Students student = new Students();
+
+                    student.setId((int) generatedKeys.getLong(1));
+                    student.setFname(fname);
+                    student.setLname(lname);
+                    student.setTown(town);
+                    student.setHobby(hobby);
+                    return student;
                 }
                 else {
                     throw new SQLException("Creating user failed, no ID obtained.");
@@ -120,7 +130,12 @@ public class SchoolAPI {
 
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    return new Courses((int) generatedKeys.getLong(1), name, description, yhp);
+                    Courses course = new Courses();
+                    course.setId((int) generatedKeys.getLong(1));
+                    course.setName(name);
+                    course.setDescription(description);
+                    course.setYhp(yhp);
+                    return course;
                 }
                 else {
                     throw new SQLException("Creating course failed, no ID obtained.");
