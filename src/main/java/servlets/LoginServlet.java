@@ -1,6 +1,7 @@
 package servlets;
 
 import models.Courses;
+import models.UserBean;
 import servlets.db.SchoolAPI;
 
 import javax.servlet.RequestDispatcher;
@@ -10,6 +11,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.registry.infomodel.User;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,24 +20,16 @@ import java.util.Arrays;
 @WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
 
-    Cookie findCookie(Cookie[] cookies, String key) {
-        if (cookies == null) return null;
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().matches(key)) {
-                return cookie;
-            }
-        }
-        return null;
-    }
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Cookie cookie = findCookie(req.getCookies(), "testName");
-        System.out.println(cookie);
-        System.out.println(req.getCookies());
+        UserBean user = (UserBean) req.getSession().getAttribute("user");
 
-        if (cookie != null && cookie.getValue() != "") {
 
+        if (user != null) {
+
+            //We have a user
             resp.sendRedirect("/home");
             return;
         }
@@ -51,7 +45,8 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.addCookie(new Cookie("testName", "testValue"));
+        UserBean user = new UserBean();
+        req.getSession().setAttribute("user", user);
         resp.sendRedirect("/login");
         //String name = req.getParameter("name");
         //String description = req.getParameter("description");
