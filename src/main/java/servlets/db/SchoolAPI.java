@@ -86,14 +86,18 @@ public class SchoolAPI {
         return studentsWithCourses;
     }
 
-    public static Students addStudent(String fname,String lname, String town, String hobby) throws SQLException {
-            String query = "INSERT INTO students (fname, lname, town, hobby) VALUES (?, ?, ?, ?)";
+    public static Students addStudent(String fname,String lname, String town, String hobby, String email, String phone, String username, String password) throws SQLException {
+            String query = "INSERT INTO students (fname, lname, town, hobby, email, phone, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             System.out.println(query);
             PreparedStatement ps = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, fname);
             ps.setString(2, lname);
             ps.setString(3, town);
             ps.setString(4, hobby);
+            ps.setString(5, email);
+            ps.setString(6, phone);
+            ps.setString(7, username);
+            ps.setString(8, Auth.encrypt(password));
             int affectedRows = ps.executeUpdate();
             if (affectedRows == 0) {
                 throw new SQLException("Creating user failed, no rows affected.");

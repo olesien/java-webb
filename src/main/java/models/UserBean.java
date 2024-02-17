@@ -1,16 +1,9 @@
 package models;
 
+import enums.PrivType;
+import enums.UserType;
+
 import java.io.Serializable;
-
-enum UserType {
-    student,
-    teacher
-}
-
-enum PrivType {
-    user,
-    admin
-}
 
 public class UserBean implements Serializable {
     private UserType userType;

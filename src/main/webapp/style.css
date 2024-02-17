@@ -1,3 +1,8 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -20,6 +25,15 @@ tr:nth-child(even) {
   justify-content: space-around;
   align-items: center;
   padding: 10px 20px;
+}
+
+.header nav {
+   display: flex;
+   align-items: center;
+}
+
+.header nav form {
+  padding: 0.5rem;
 }
 
 .header a {

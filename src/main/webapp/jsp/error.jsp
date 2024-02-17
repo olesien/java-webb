@@ -8,14 +8,9 @@
 </head>
     <body>
 
-               <div class="header">
-                    <h2>Error</h2>
-                    <nav>
-                        <a class="disabled" href="/students">Students</a>
-                        <a href="/courses">Courses</a>
-                        <a href="/student_courses">Student Courses</a>
-                    </nav>
-               </div>
+                 <jsp:include page='fragments/nav.jsp'>
+                     <jsp:param name="title" value="Error"/>
+                 </jsp:include>
                <div>
                     <p class="error"><%= request.getAttribute("code") %> - <%=request.getAttribute("message") %></p>
                </div>

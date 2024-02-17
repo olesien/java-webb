@@ -1,5 +1,7 @@
 package servlets;
 
+import enums.PrivType;
+import enums.UserType;
 import models.Courses;
 import models.UserBean;
 import servlets.db.SchoolAPI;
@@ -46,6 +48,13 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserBean user = new UserBean();
+        user.setUserType(UserType.teacher);
+        user.setPrivType(PrivType.admin);
+        user.setUsername("TEST");
+
+        System.out.println(user);
+        System.out.println(user.getUserType());
+        System.out.println(user.getPrivType());
         req.getSession().setAttribute("user", user);
         resp.sendRedirect("/login");
         //String name = req.getParameter("name");

@@ -30,14 +30,16 @@
                <table>
                    <tr>
                        <th>Id</th>
-                       <th>Name</th>
+                       <th>First Name</th>
+                       <th>Last Name</th>
                        <th>Town</th>
                        <th>Hobby</th>
                    </tr>
                    <% for (Students student : studentsList) { %>
                    <tr>
                        <td>#<%= student.getId() %></td>
-                       <td><%= student.getName() %></td>
+                       <td><%= student.getFname() %></td>
+                       <td><%= student.getLname() %></td>
                        <td><%= student.getTown() %></td>
                        <td><%= student.getHobby() %></td>
                    </tr>
@@ -47,20 +49,6 @@
                No students found.
                <% } %>
                <br>
-               <form action="/students" method="POST">
-                 <label for="fname">First Name:</label><br>
-                 <input type="text" id="fname" name="fname" required minlength="2"><br>
-
-                 <label for="lname">Last Name:</label><br>
-                 <input type="text" id="lname" name="lname" required minlength="2"><br>
-
-                  <label for="town">Town:</label><br>
-                  <input type="text" id="town" name="town" required minlength="2"><br>
-
-                  <label for="hobby">Hobby:</label><br>
-                  <input type="text" id="hobby" name="hobby" required minlength="2"><br>
-                 <input type="submit" value="Submit">
-               </form>
 
     </body>
 </html>
