@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Objects;
 
 @WebServlet(urlPatterns = "/register")
 public class RegisterServlet extends HttpServlet {
@@ -58,7 +59,7 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-        if (req.getParameter("type") == "student")
+        if (Objects.equals(req.getParameter("type"), "student")) {
             System.out.println("received post for students");
             String fname = req.getParameter("fname");
             String lname = req.getParameter("lname");
@@ -75,5 +76,23 @@ public class RegisterServlet extends HttpServlet {
                 throw new RuntimeException(e);
             }
 
-        }
+        } else if (Objects.equals(req.getParameter("type"), "teacher"))
+            System.out.println("received post for teachers");
+            String fname = req.getParameter("teacher_fname");
+            String lname = req.getParameter("teacher_lname");
+            String town = req.getParameter("teacher_town");
+            String hobby = req.getParameter("teacher_hobby");
+            String email = req.getParameter("teacher_email");
+            String phone = req.getParameter("teacher_phone");
+            String username = req.getParameter("teacher_username");
+            String password = req.getParameter("teacher_password");
+            PrivType priv = PrivType.valueOf(req.getParameter("teacher_priv"));
+            try {
+        SchoolAPI.addTeacher(fname,lname, town, hobby, email, phone, username, password, priv);
+        resp.sendRedirect("/students?status=success");
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+
+}
 }

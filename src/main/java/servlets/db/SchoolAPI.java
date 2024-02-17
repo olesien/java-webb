@@ -1,8 +1,10 @@
 package servlets.db;
 
+import enums.PrivType;
 import models.Courses;
 import models.Students;
 import models.StudentsWithCourses;
+import models.Teachers;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -112,12 +114,52 @@ public class SchoolAPI {
                     student.setLname(lname);
                     student.setTown(town);
                     student.setHobby(hobby);
+                    student.setEmail(email);
+                    student.setPhone(phone);
+                    student.setUsername(username);
                     return student;
                 }
                 else {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
             }
+    }
+    public static Teachers addTeacher(String fname, String lname, String town, String hobby, String email, String phone, String username, String password, PrivType priv) throws SQLException {
+        String query = "INSERT INTO teachers (fname, lname, town, hobby, email, phone, username, password, privilage_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement ps = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        ps.setString(1, fname);
+        ps.setString(2, lname);
+        ps.setString(3, town);
+        ps.setString(4, hobby);
+        ps.setString(5, email);
+        ps.setString(6, phone);
+        ps.setString(7, username);
+        ps.setString(8, Auth.encrypt(password));
+        ps.setString(9, priv.toString());
+        int affectedRows = ps.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Creating teacher failed, no rows affected.");
+        }
+
+        try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                Teachers teacher = new Teachers();
+
+                teacher.setId((int) generatedKeys.getLong(1));
+                teacher.setFname(fname);
+                teacher.setLname(lname);
+                teacher.setTown(town);
+                teacher.setHobby(hobby);
+                teacher.setEmail(email);
+                teacher.setPhone(phone);
+                teacher.setUsername(username);
+                teacher.setPrivType(priv);
+                return teacher;
+            }
+            else {
+                throw new SQLException("Creating teacher failed, no ID obtained.");
+            }
+        }
     }
 
     public static Courses addCourse(String name, String description, Integer yhp) throws SQLException {
