@@ -10,14 +10,9 @@
 </head>
     <body>
 
-               <div class="header">
-                    <h2><%= request.getAttribute("name") %></h2>
-                    <nav>
-                        <a href="/students">Students</a>
-                        <a href="/courses">Courses</a>
-                        <a class="disabled" href="/student_courses">Student Courses</a>
-                    </nav>
-               </div>
+                <jsp:include page='fragments/nav.jsp'>
+                    <jsp:param name="title" value="Student Courses"/>
+                </jsp:include>
                    <%
                        String status = request.getParameter("status");
                        if (status != null) {
@@ -37,7 +32,7 @@
                    </tr>
                    <% for (StudentsWithCourses studentWithCourses : studentsWithCoursesList) { %>
                    <tr>
-                       <td><%= studentWithCourses.getName() %></td>
+                       <td><%= studentWithCourses.getFname() %></td>
                        <td><%= studentWithCourses.getTown() %></td>
                        <td><%= studentWithCourses.getHobby() %></td>
                        <td><%= studentWithCourses.getCourses() %></td>
@@ -60,7 +55,7 @@
                                               <select name="student" id="student-select" required>
                                                 <option value="">Select Student</option>
                                                  <% for (Students student : students) { %>
-                                                     <option value="<%= student.getId() %>"><%= student.getId() %>. <%= student.getName() %></option>
+                                                     <option value="<%= student.getId() %>"><%= student.getId() %>. <%= student.getFname() %></option>
                                                  <% } %>
                                               </select>
                                               <label for="course-select">Choose a course:</label>

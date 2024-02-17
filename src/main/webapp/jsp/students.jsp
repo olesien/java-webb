@@ -8,14 +8,9 @@
 </head>
     <body>
 
-               <div class="header">
-                    <h2><%= request.getAttribute("name") %></h2>
-                    <nav>
-                        <a class="disabled" href="/students">Students</a>
-                        <a href="/courses">Courses</a>
-                        <a href="/student_courses">Student Courses</a>
-                    </nav>
-               </div>
+            <jsp:include page='fragments/nav.jsp'>
+                <jsp:param name="title" value="Students"/>
+            </jsp:include>
                <%
                    String status = request.getParameter("status");
                    if (status != null) {

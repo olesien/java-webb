@@ -1,16 +1,25 @@
 <%@ page import="models.UserBean" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
+<%@ page import="enums.UserType" %>
+<%@ page import="enums.PrivType" %>
 <div class="header">
 
-    My id is ${user.getUsername()}
       <h2>${title}</h2>
        <nav>
           <a class="disabled" href="/students">Students</a>
           <a href="/courses">Courses</a>
           <a href="/student_courses">Student Courses</a>
-          <a href="/register">Register</a>
-          <form action="/logout" method="POST">
-              <input type="submit" value="Logout">
-          </form>
+           <% if (session.getAttribute("user") != null) { %>
+               <% UserBean user = (UserBean) session.getAttribute("user"); %>
+               <% if (user.getUserType() == UserType.teacher && user.getPrivType() == PrivType.admin) { %>
+                    <a href="/register">Register</a>
+               <% } %>
+           <form action="/logout" method="POST">
+               <input type="submit" value="Logout">
+           </form>
+           <a href="/user">${user.getUsername()}</a>
+           <% } else { %>
+                <a href="/login">Login</a>
+           <% } %>
        </nav>
  </div>
