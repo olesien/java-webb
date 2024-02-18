@@ -28,7 +28,7 @@ public class RegisterServlet extends HttpServlet {
             resp.sendRedirect("/login");
             return;
         }
-        if (user.getUserType() != UserType.teacher || user.getPrivType() != PrivType.admin) {
+        if (user.getUserType() != UserType.teacher || user.getPrivType() != PrivType.superadmin) {
             //User lacks access.
             req.setAttribute("message", "Permission Denied");
             req.setAttribute("code", 403);
@@ -36,10 +36,17 @@ public class RegisterServlet extends HttpServlet {
             dispatcher.forward(req, resp);
             return;
         }
-
-        // Forward the request to the JSP file
-        RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/register.jsp");
-        dispatcher.forward(req, resp);
+        if (Objects.equals(req.getParameter("type"), "student")) {
+            // Forward the request to the JSP file
+            RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/student.jsp");
+            dispatcher.forward(req, resp);
+        } else if (Objects.equals(req.getParameter("type"), "teacher")) {
+            RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/teacher.jsp");
+            dispatcher.forward(req, resp);
+        } else if (Objects.equals(req.getParameter("type"), "course")) {
+            RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/course.jsp");
+            dispatcher.forward(req, resp);
+        }
     }
 
     @Override
@@ -50,7 +57,7 @@ public class RegisterServlet extends HttpServlet {
             resp.sendRedirect("/login");
             return;
         }
-        if (user.getUserType() != UserType.teacher || user.getPrivType() != PrivType.admin) {
+        if (user.getUserType() != UserType.teacher || user.getPrivType() != PrivType.superadmin) {
             //User lacks access.
             req.setAttribute("message", "Permission Denied");
             req.setAttribute("code", 403);
@@ -76,7 +83,8 @@ public class RegisterServlet extends HttpServlet {
                 throw new RuntimeException(e);
             }
 
-        } else if (Objects.equals(req.getParameter("type"), "teacher"))
+        }
+        else if (Objects.equals(req.getParameter("type"), "teacher")) {
             System.out.println("received post for teachers");
             String fname = req.getParameter("teacher_fname");
             String lname = req.getParameter("teacher_lname");
@@ -88,11 +96,23 @@ public class RegisterServlet extends HttpServlet {
             String password = req.getParameter("teacher_password");
             PrivType priv = PrivType.valueOf(req.getParameter("teacher_priv"));
             try {
-        SchoolAPI.addTeacher(fname,lname, town, hobby, email, phone, username, password, priv);
-        resp.sendRedirect("/students?status=success");
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
+                SchoolAPI.addTeacher(fname, lname, town, hobby, email, phone, username, password, priv);
+                resp.sendRedirect("/students?status=success");
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else if (Objects.equals(req.getParameter("type"), "course")) {
+            System.out.println("received post for course");
+            String name = req.getParameter("course_name");
+            String description = req.getParameter("course_description");
+            String yhp = req.getParameter("course_yhp");
+            try {
+                SchoolAPI.addCourse(name, description, Integer.valueOf(yhp));
+                resp.sendRedirect("/students?status=success");
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
-
-}
 }

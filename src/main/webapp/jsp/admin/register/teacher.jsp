@@ -8,44 +8,18 @@
     <link rel="stylesheet" type="text/css" href="register.css">
 </head>
     <body>
-            <jsp:include page='fragments/nav.jsp'>
-                <jsp:param name="title" value="Register"/>
+            <jsp:include page='../../fragments/nav.jsp'>
+                <jsp:param name="title" value="Register Teacher"/>
             </jsp:include>
 
              <div class="bar">
-              <button class="bar-button studentsButton selected">Students</button>
-              <button class="bar-button teachersButton">Teachers</button>
+              <a class="bar-button studentsButton" href="/register?type=student">New Student</a>
+              <a class="bar-button teachersButton selected" href="/register?type=teacher">New Teacher</a>
+              <a class="bar-button newCourseButton" href="/register?type=course">New Course</a>
+              <a class="bar-button courseRelationButton" href="/register?type=courserelation">Course Relation</a>
             </div>
         <div>
-            <div class="students">
-                <form action="/register?type=student" method="POST">
-                    <label for="username">Username:</label><br>
-                    <input type="text" id="username" name="username" required minlength="2"><br>
-
-                    <label for="password">Password:</label><br>
-                    <input type="password" id="password" name="password" required minlength="3"><br>
-
-                    <label for="fname">First Name:</label><br>
-                    <input type="text" id="fname" name="fname" required minlength="2"><br>
-
-                    <label for="lname">Last Name:</label><br>
-                    <input type="text" id="lname" name="lname" required minlength="2"><br>
-
-                    <label for="town">Town:</label><br>
-                    <input type="text" id="town" name="town" required minlength="2"><br>
-
-                    <label for="hobby">Hobby:</label><br>
-                    <input type="text" id="hobby" name="hobby"><br>
-
-                    <label for="email">Email:</label><br>
-                    <input type="email" id="email" name="email" required minlength="2"><br>
-
-                    <label for="phone">Phone:</label><br>
-                    <input type="tel" id="phone" name="phone" required minlength="2"><br>
-                    <input type="submit" value="Submit">
-                </form>
-            </div>
-            <div class="teachers hidden">
+            <div class="teachers">
                 <form action="/register?type=teacher" method="POST">
                     <label for="teacher_username">Username:</label><br>
                     <input type="text" id="teacher_username" name="teacher_username" required minlength="2"><br>
@@ -83,6 +57,5 @@
             </div>
 
         </div>
-            <script src="scripts/register.js"></script>
     </body>
 </html>

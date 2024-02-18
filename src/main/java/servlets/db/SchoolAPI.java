@@ -209,4 +209,61 @@ public class SchoolAPI {
                 }
             }
     }
+
+    public static Students getStudentByUsername(String username) {
+        try {
+            //fname, lname, town, hobby, email, phone, username, password
+            String query = "SELECT id, fname, lname, town, hobby, email, phone, username, password from students WHERE username = ? LIMIT 1";
+            PreparedStatement ps = Database.getConnection().prepareStatement(query);
+            ps.setString(1, username);
+            System.out.println(ps);
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+                Students student = new Students();
+                student.setId(result.getInt("id"));
+                student.setFname(result.getString("fname"));
+                student.setLname(result.getString("lname"));
+                student.setTown(result.getString("town"));
+                student.setHobby(result.getString("hobby"));
+                student.setEmail(result.getString("email"));
+                student.setPhone(result.getString("phone"));
+                student.setUsername(result.getString("username"));
+                student.setPassword(result.getString("password"));
+
+                return student;
+            }
+        } catch(SQLException ex) {
+            Database.PrintSQLException(ex);
+        }
+        return null;
+    }
+
+    public static Teachers getTeacherByUsername(String username) {
+        try {
+            //fname, lname, town, hobby, email, phone, username, password
+            String query = "SELECT id, fname, lname, town, hobby, email, phone, username, password, privilage_type from teachers WHERE username = ? LIMIT 1";
+            PreparedStatement ps = Database.getConnection().prepareStatement(query);
+            ps.setString(1, username);
+            System.out.println(ps);
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+                Teachers teacher = new Teachers();
+                teacher.setId(result.getInt("id"));
+                teacher.setFname(result.getString("fname"));
+                teacher.setLname(result.getString("lname"));
+                teacher.setTown(result.getString("town"));
+                teacher.setHobby(result.getString("hobby"));
+                teacher.setEmail(result.getString("email"));
+                teacher.setPhone(result.getString("phone"));
+                teacher.setUsername(result.getString("username"));
+                teacher.setPassword(result.getString("password"));
+                teacher.setPrivType(PrivType.valueOf(result.getString("privilage_type")));
+
+                return teacher;
+            }
+        } catch(SQLException ex) {
+            Database.PrintSQLException(ex);
+        }
+        return null;
+    }
 }

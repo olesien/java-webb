@@ -13,9 +13,6 @@ CREATE TABLE students (
    hobby TEXT
 );
 
-INSERT INTO students (name, town, hobby) VALUES ('Linus', 'Malmö', 'Programming');
-INSERT INTO students (name, town, hobby) VALUES ('Maria', 'Stockholm', 'Painting');
-
 CREATE TABLE courses (
  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
  name VARCHAR(100) NOT NULL,
@@ -32,8 +29,6 @@ CREATE TABLE attendance (
     student_id INT NOT NULL REFERENCES students(id),
     course_id INT NOT NULL REFERENCES courses(id)
 );
-
-INSERT INTO attendance (student_id, course_id) VALUES (1,2);
 
 #TRUNCATE students;
 
@@ -63,3 +58,9 @@ CREATE TABLE teacher_courses (
     teachers_id INT NOT NULL REFERENCES teachers(id),
     course_id INT NOT NULL REFERENCES courses(id)
 );
+
+ALTER TABLE teachers ADD CONSTRAINT UC_teachers_email UNIQUE (email);
+ALTER TABLE teachers ADD CONSTRAINT UC_teachers_username UNIQUE (username);
+
+ALTER TABLE students ADD CONSTRAINT UC_students_email UNIQUE (email);
+ALTER TABLE students ADD CONSTRAINT UC_students_username UNIQUE (username);

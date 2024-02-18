@@ -9,7 +9,12 @@
 </head>
     <body>
             <div class="login-container">
-               <form class="login" ="/login" method="POST">
+               <form class="login" method="POST">
+                   <label for="type">As:</label><br>
+                   <select name="type" id="type">
+                       <option value="student" selected>Student</option>
+                       <option value="teacher">Teacher</option>
+                  </select><br>
                  <label for="username">Username:</label><br>
                  <input type="text" id="username" name="username" required minlength="2"><br>
 

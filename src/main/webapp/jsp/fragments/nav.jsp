@@ -11,8 +11,8 @@
           <a href="/student_courses">Student Courses</a>
            <% if (session.getAttribute("user") != null) { %>
                <% UserBean user = (UserBean) session.getAttribute("user"); %>
-               <% if (user.getUserType() == UserType.teacher && user.getPrivType() == PrivType.admin) { %>
-                    <a href="/register">Register</a>
+               <% if (user.getUserType() == UserType.teacher && user.getPrivType() == PrivType.superadmin) { %>
+                    <a href="/register?type=student">Register</a>
                <% } %>
            <form action="/logout" method="POST">
                <input type="submit" value="Logout">
