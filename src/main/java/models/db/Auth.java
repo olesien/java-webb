@@ -1,9 +1,7 @@
-package servlets.db;
+package models.db;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Arrays;
-import java.util.Base64;
 
 public class Auth {
     private static final int SALT_LENGTH = 16;

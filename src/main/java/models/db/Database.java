@@ -1,4 +1,4 @@
-package servlets.db;
+package models.db;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class Database {
     /*
-        servlets.db.Database Configuration
+        models.db.Database Configuration
      */
     static String url = "localhost";
     static int port = 3307;

@@ -16,7 +16,7 @@
               <a class="bar-button studentsButton" href="/register?type=student">New Student</a>
               <a class="bar-button teachersButton selected" href="/register?type=teacher">New Teacher</a>
               <a class="bar-button newCourseButton" href="/register?type=course">New Course</a>
-              <a class="bar-button courseRelationButton" href="/register?type=courserelation">Course Relation</a>
+              <a class="bar-button courseRelationButton" href="/register?type=courserelation">Student Course Relation</a>
             </div>
         <div>
             <div class="teachers">

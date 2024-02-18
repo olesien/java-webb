@@ -1,11 +1,9 @@
 package servlets;
 
-import enums.PrivType;
 import enums.UserType;
 import models.Courses;
-import models.Students;
 import models.UserBean;
-import servlets.db.SchoolAPI;
+import models.db.SchoolAPI;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,7 +35,12 @@ public class CoursesServlet extends HttpServlet {
             return;
         }
 
-        ArrayList<Courses> courses = SchoolAPI.getCourses();
+        ArrayList<Courses> courses = null;
+        try {
+            courses = SchoolAPI.getCourses();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         req.setAttribute("name", "Courses");
         req.setAttribute("courses", courses);
 

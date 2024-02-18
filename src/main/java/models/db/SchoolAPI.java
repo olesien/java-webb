@@ -1,4 +1,4 @@
-package servlets.db;
+package models.db;
 
 import enums.PrivType;
 import models.Courses;
@@ -16,9 +16,8 @@ public class SchoolAPI {
 
     private SchoolAPI() { }
 
-    public static ArrayList<Students> getStudents() {
+    public static ArrayList<Students> getStudents() throws SQLException {
         ArrayList<Students> students = new ArrayList<>();
-        try {
             Statement statement = Database.getConnection().createStatement();
             String query = "SELECT * FROM students";
             System.out.println(query);
@@ -34,15 +33,11 @@ public class SchoolAPI {
 
                 students.add(student);
             }
-        } catch(SQLException ex) {
-            Database.PrintSQLException(ex);
-        }
         return students;
     }
 
-    public static ArrayList<Courses> getCourses() {
+    public static ArrayList<Courses> getCourses() throws SQLException {
         ArrayList<Courses> courses = new ArrayList<>();
-        try {
             Statement statement = Database.getConnection().createStatement();
             String query = "SELECT * FROM courses";
             System.out.println(query);
@@ -57,15 +52,51 @@ public class SchoolAPI {
 
                 courses.add(course);
             }
-        } catch(SQLException ex) {
-            Database.PrintSQLException(ex);
-        }
         return courses;
     }
 
-    public static ArrayList<StudentsWithCourses> getStudentsWithCourses() {
+    public static ArrayList<Courses> getCoursesByStudentId(Integer student_id) throws SQLException {
+        ArrayList<Courses> courses = new ArrayList<>();
+            String query = "SELECT DISTINCT(c.id), c.name, c.description, c.yhp FROM courses c INNER JOIN attendance sc ON c.id = sc.course_id WHERE sc.student_id = ? GROUP BY c.id";
+            PreparedStatement ps = Database.getConnection().prepareStatement(query);
+            ps.setInt(1, student_id);
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+
+                Courses course = new Courses();
+                course.setId( result.getInt("id"));
+                course.setName( result.getString("name"));
+                course.setDescription( result.getString("description"));
+                course.setYhp( result.getInt("yhp"));
+
+                courses.add(course);
+            }
+
+        return courses;
+    }
+
+    public static ArrayList<Courses> getCoursesByTeacherId(Integer teacher_id) throws SQLException {
+        ArrayList<Courses> courses = new ArrayList<>();
+            String query = "SELECT DISTINCT(c.id), c.name, c.description, c.yhp FROM courses c INNER JOIN teacher_courses tc ON c.id = tc.course_id WHERE tc.teachers_id = ? GROUP BY c.id";
+            PreparedStatement ps = Database.getConnection().prepareStatement(query);
+            ps.setInt(1, teacher_id);
+            System.out.println(ps);
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+
+                Courses course = new Courses();
+                course.setId( result.getInt("id"));
+                course.setName( result.getString("name"));
+                course.setDescription( result.getString("description"));
+                course.setYhp( result.getInt("yhp"));
+
+                courses.add(course);
+            }
+        return courses;
+    }
+
+    public static ArrayList<StudentsWithCourses> getStudentsWithCourses() throws SQLException {
         ArrayList<StudentsWithCourses> studentsWithCourses = new ArrayList<>();
-        try {
             Statement statement = Database.getConnection().createStatement();
             String query = "SELECT s.id, s.fname, s.lname, s.town, s.hobby, IFNULL(GROUP_CONCAT(c.name SEPARATOR ', '), '') as courselist FROM students s LEFT JOIN attendance a ON s.id = a.student_id LEFT JOIN courses c ON c.id = a.course_id GROUP BY s.id";
             System.out.println(query);
@@ -82,9 +113,6 @@ public class SchoolAPI {
 
                 studentsWithCourses.add(studentsWithCourse);
             }
-        } catch(SQLException ex) {
-            Database.PrintSQLException(ex);
-        }
         return studentsWithCourses;
     }
 
@@ -210,13 +238,11 @@ public class SchoolAPI {
             }
     }
 
-    public static Students getStudentByUsername(String username) {
-        try {
+    public static Students getStudentByUsername(String username) throws SQLException {
             //fname, lname, town, hobby, email, phone, username, password
             String query = "SELECT id, fname, lname, town, hobby, email, phone, username, password from students WHERE username = ? LIMIT 1";
             PreparedStatement ps = Database.getConnection().prepareStatement(query);
             ps.setString(1, username);
-            System.out.println(ps);
             ResultSet result = ps.executeQuery();
             while (result.next()) {
                 Students student = new Students();
@@ -232,14 +258,10 @@ public class SchoolAPI {
 
                 return student;
             }
-        } catch(SQLException ex) {
-            Database.PrintSQLException(ex);
-        }
         return null;
     }
 
-    public static Teachers getTeacherByUsername(String username) {
-        try {
+    public static Teachers getTeacherByUsername(String username) throws SQLException {
             //fname, lname, town, hobby, email, phone, username, password
             String query = "SELECT id, fname, lname, town, hobby, email, phone, username, password, privilage_type from teachers WHERE username = ? LIMIT 1";
             PreparedStatement ps = Database.getConnection().prepareStatement(query);
@@ -261,9 +283,6 @@ public class SchoolAPI {
 
                 return teacher;
             }
-        } catch(SQLException ex) {
-            Database.PrintSQLException(ex);
-        }
         return null;
     }
 }

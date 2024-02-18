@@ -3,7 +3,7 @@ package servlets;
 import models.Courses;
 import models.Students;
 import models.StudentsWithCourses;
-import servlets.db.SchoolAPI;
+import models.db.SchoolAPI;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,9 +21,24 @@ public class StudentCoursesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ArrayList<StudentsWithCourses> studentsWithCourses = SchoolAPI.getStudentsWithCourses();
-        ArrayList<Students> students = SchoolAPI.getStudents();
-        ArrayList<Courses> courses = SchoolAPI.getCourses();
+        ArrayList<StudentsWithCourses> studentsWithCourses = null;
+        try {
+            studentsWithCourses = SchoolAPI.getStudentsWithCourses();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ArrayList<Students> students = null;
+        try {
+            students = SchoolAPI.getStudents();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ArrayList<Courses> courses = null;
+        try {
+            courses = SchoolAPI.getCourses();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         req.setAttribute("name", "Student Courses");
         req.setAttribute("students", students);
         req.setAttribute("courses", courses);

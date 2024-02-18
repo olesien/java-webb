@@ -10,7 +10,7 @@
 </head>
     <body>
 
-            <jsp:include page='fragments/nav.jsp'>
+            <jsp:include page='../fragments/nav.jsp'>
                 <jsp:param name="title" value="Students"/>
             </jsp:include>
                 <c:choose>

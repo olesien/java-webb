@@ -2,25 +2,20 @@ package servlets;
 
 import enums.PrivType;
 import enums.UserType;
-import models.Courses;
 import models.Students;
 import models.Teachers;
 import models.UserBean;
-import servlets.db.Auth;
-import servlets.db.SchoolAPI;
+import models.db.Auth;
+import models.db.SchoolAPI;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.registry.infomodel.User;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 @WebServlet(urlPatterns = "/login")
@@ -56,7 +51,12 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
         if (Objects.equals(req.getParameter("type"), "student")) {
             System.out.println("Student login attempt");
-            Students student = SchoolAPI.getStudentByUsername(username);
+            Students student = null;
+            try {
+                student = SchoolAPI.getStudentByUsername(username);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
 
             //Check if student matches password
 
@@ -67,6 +67,7 @@ public class LoginServlet extends HttpServlet {
             if (Auth.matches(password, student.getPassword())) {
                 System.out.println("Login success");
                 UserBean user = new UserBean();
+                user.setId(student.getId());
                 user.setUsername(student.getUsername());
                 user.setPrivType(PrivType.user);
                 user.setUserType(UserType.student);
@@ -83,7 +84,12 @@ public class LoginServlet extends HttpServlet {
         } else if (Objects.equals(req.getParameter("type"), "teacher")) {
             System.out.println("Teacher login attempt");
 
-            Teachers teacher = SchoolAPI.getTeacherByUsername(username);
+            Teachers teacher = null;
+            try {
+                teacher = SchoolAPI.getTeacherByUsername(username);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
 
             //Check if teacher matches password
 
@@ -94,6 +100,7 @@ public class LoginServlet extends HttpServlet {
             if (Auth.matches(password, teacher.getPassword())) {
                 System.out.println("Login success");
                 UserBean user = new UserBean();
+                user.setId(teacher.getId());
                 user.setUsername(teacher.getUsername());
                 user.setPrivType(teacher.getPrivType());
                 user.setUserType(UserType.teacher);
