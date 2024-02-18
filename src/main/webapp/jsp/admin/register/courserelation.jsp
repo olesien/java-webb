@@ -10,7 +10,7 @@
 </head>
     <body>
             <jsp:include page='../../fragments/nav.jsp'>
-                <jsp:param name="title" value="Register Teacher"/>
+                <jsp:param name="title" value="Register Course Relation"/>
             </jsp:include>
 
              <div class="bar">

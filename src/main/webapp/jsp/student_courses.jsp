@@ -49,25 +49,6 @@
                                   if (students != null && !students.isEmpty() && courses != null && !courses.isEmpty()) {
                                   %>
                                      <br>
-                                         <form action="/student_courses" method="POST">
-                                              <label for="student-select">Choose a student:</label>
-
-                                              <select name="student" id="student-select" required>
-                                                <option value="">Select Student</option>
-                                                 <% for (Students student : students) { %>
-                                                     <option value="<%= student.getId() %>"><%= student.getId() %>. <%= student.getFname() %></option>
-                                                 <% } %>
-                                              </select>
-                                              <label for="course-select">Choose a course:</label>
-
-                                              <select name="course" id="course-select" required>
-                                                <option value="">Select Course</option>
-                                                 <% for (Courses course : courses) { %>
-                                                     <option value="<%= course.getId() %>"><%= course.getName() %></option>
-                                                 <% } %>
-                                              </select>
-                                           <input type="submit" value="Submit">
-                                         </form>
                                   <% } else { %>
                                       No students or courses found.
                                   <% } %>

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="models.Courses" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title><%= request.getAttribute("name") %> </title>
@@ -11,44 +12,28 @@
                 <jsp:include page='fragments/nav.jsp'>
                     <jsp:param name="title" value="Courses"/>
                 </jsp:include>
-               <%
-                  String status = request.getParameter("status");
-                  if (status != null) {
-                  %>
-                   <p class="status"><%= status %></p>
-               <% } %>
-               <%
-                   ArrayList<Courses> courseList = (ArrayList<Courses>) request.getAttribute("courses");
-                   if (courseList != null && !courseList.isEmpty()) {
-               %>
-               <table>
-                   <tr>
-                       <th>Name</th>
-                       <th>Description</th>
-                       <th>YHP</th>
-                   </tr>
-                   <% for (Courses course : courseList) { %>
-                   <tr>
-                       <td><%= course.getName() %></td>
-                       <td><%= course.getDescription() %></td>
-                       <td><%= course.getYhp() %></td>
-                   </tr>
-                   <% } %>
-               </table>
-               <% } else { %>
-                No courses found.
-               <% } %>
-                 <br>
-                    <form action="/courses" method="POST">
-                      <label for="name">Name:</label><br>
-                      <input type="text" id="name" name="name" required minlength="2"><br>
 
-                       <label for="description">Description:</label><br>
-                       <input type="text" id="description" name="description" required minlength="2"><br>
 
-                       <label for="yhp">YHP:</label><br>
-                       <input type="number" id="yhp" name="yhp" required min="1"><br>
-                      <input type="submit" value="Submit">
-                    </form>
+                <c:choose>
+                    <c:when test="${not empty courses}">
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>YHP</th>
+                            </tr>
+                            <c:forEach var="course" items="${courses}">
+                                <tr>
+                                    <td>${course.name}</td>
+                                    <td>${course.description}</td>
+                                    <td>${course.yhp}</td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </c:when>
+                    <c:otherwise>
+                        <p>No courses found.</p>
+                    </c:otherwise>
+                </c:choose>
     </body>
 </html>

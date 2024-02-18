@@ -1,7 +1,10 @@
 package servlets;
 
+import enums.PrivType;
+import enums.UserType;
 import models.Courses;
 import models.Students;
+import models.UserBean;
 import servlets.db.SchoolAPI;
 
 import javax.servlet.RequestDispatcher;
@@ -19,6 +22,20 @@ public class CoursesServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UserBean user = (UserBean) req.getSession().getAttribute("user");
+        if (user == null) {
+            //We have a user
+            resp.sendRedirect("/login");
+            return;
+        }
+        if (user.getUserType() != UserType.teacher) {
+            //User lacks access.
+            req.setAttribute("message", "Permission Denied");
+            req.setAttribute("code", 403);
+            RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/error.jsp");
+            dispatcher.forward(req, resp);
+            return;
+        }
 
         ArrayList<Courses> courses = SchoolAPI.getCourses();
         req.setAttribute("name", "Courses");
@@ -27,19 +44,5 @@ public class CoursesServlet extends HttpServlet {
         // Forward the request to the JSP file
         RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/courses.jsp");
         dispatcher.forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("name");
-        String description = req.getParameter("description");
-        String yhp = req.getParameter("yhp");
-        try {
-            SchoolAPI.addCourse(name, description, Integer.valueOf(yhp));
-            resp.sendRedirect("/courses?status=success");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 }

@@ -1,6 +1,9 @@
 package servlets;
 
+import enums.PrivType;
+import enums.UserType;
 import models.Students;
+import models.UserBean;
 import servlets.db.SchoolAPI;
 
 import javax.servlet.RequestDispatcher;
@@ -18,7 +21,20 @@ public class StudentsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        UserBean user = (UserBean) req.getSession().getAttribute("user");
+        if (user == null) {
+            //We have a user
+            resp.sendRedirect("/login");
+            return;
+        }
+        if (user.getUserType() != UserType.teacher) {
+            //User lacks access.
+            req.setAttribute("message", "Permission Denied");
+            req.setAttribute("code", 403);
+            RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/error.jsp");
+            dispatcher.forward(req, resp);
+            return;
+        }
         ArrayList<Students> students = SchoolAPI.getStudents();
         req.setAttribute("name", "Students");
         req.setAttribute("students", students);
@@ -28,21 +44,6 @@ public class StudentsServlet extends HttpServlet {
         dispatcher.forward(req, resp);
 
         System.out.println("GET Request");
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        System.out.println("received post for students");
-        String fname = req.getParameter("fname");
-        String lname = req.getParameter("lname");
-        String town = req.getParameter("town");
-        String hobby = req.getParameter("hobby");
-        //try {
-         //   SchoolAPI.addStudent(fname,lname, town, hobby);
-         //   resp.sendRedirect("/students?status=success");
-        //} catch (SQLException e) {
-        //    throw new RuntimeException(e);
-        //}
     }
 }
 
