@@ -3,7 +3,7 @@
 <%@ page import="models.Students" %>
 <html>
 <head>
-    <title>Login</title>
+    <title>Add Teacher</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="register.css">
 </head>
@@ -45,7 +45,7 @@
                     <label for="teacher_phone">Phone:</label><br>
                     <input type="tel" id="teacher_phone" name="teacher_phone" required minlength="2"><br>
 
-                    <label for="teacher_priv">Privelege Type:</label><br>
+                    <label for="teacher_priv">Privilege Type:</label><br>
                     <select name="teacher_priv" id="teacher_priv">
                         <option value="user" selected>User</option>
                         <option value="admin">Admin</option>

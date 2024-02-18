@@ -2,6 +2,8 @@ package servlets;
 
 import enums.PrivType;
 import enums.UserType;
+import models.Courses;
+import models.Students;
 import models.UserBean;
 import servlets.db.SchoolAPI;
 
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 @WebServlet(urlPatterns = "/register")
@@ -45,6 +48,13 @@ public class RegisterServlet extends HttpServlet {
             dispatcher.forward(req, resp);
         } else if (Objects.equals(req.getParameter("type"), "course")) {
             RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/course.jsp");
+            dispatcher.forward(req, resp);
+        } else if (Objects.equals(req.getParameter("type"), "courserelation")) {
+            ArrayList<Courses> courses = SchoolAPI.getCourses();
+            ArrayList<Students> students = SchoolAPI.getStudents();
+            req.setAttribute("courses", courses);
+            req.setAttribute("students", students);
+            RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/courserelation.jsp");
             dispatcher.forward(req, resp);
         }
     }
@@ -110,6 +120,16 @@ public class RegisterServlet extends HttpServlet {
             try {
                 SchoolAPI.addCourse(name, description, Integer.valueOf(yhp));
                 resp.sendRedirect("/students?status=success");
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (Objects.equals(req.getParameter("type"), "courserelation")) {
+            System.out.println("received post for course+student relation");
+            Integer student_id = Integer.valueOf(req.getParameter("courserelation_student"));
+            Integer course_id = Integer.valueOf(req.getParameter("courserelation_course"));
+            try {
+                SchoolAPI.addStudentCourseRelation(student_id, course_id);
+                resp.sendRedirect("/student_courses?status=success");
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

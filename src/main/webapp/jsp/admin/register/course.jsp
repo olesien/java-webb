@@ -3,7 +3,7 @@
 <%@ page import="models.Students" %>
 <html>
 <head>
-    <title>Login</title>
+    <title>Add Course</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="register.css">
 </head>
