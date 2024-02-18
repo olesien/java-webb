@@ -36,6 +36,26 @@ public class SchoolAPI {
         return students;
     }
 
+    public static ArrayList<Teachers> getTeachers() throws SQLException {
+        ArrayList<Teachers> teachers = new ArrayList<>();
+        Statement statement = Database.getConnection().createStatement();
+        String query = "SELECT * FROM teachers";
+        System.out.println(query);
+        ResultSet result = statement.executeQuery(query);
+        while (result.next()) {
+
+            Teachers teacher = new Teachers();
+            teacher.setId(result.getInt("id"));
+            teacher.setFname(result.getString("fname"));
+            teacher.setLname(result.getString("lname"));
+            teacher.setTown(result.getString("town"));
+            teacher.setHobby(result.getString("hobby"));
+
+            teachers.add(teacher);
+        }
+        return teachers;
+    }
+
     public static ArrayList<Courses> getCourses() throws SQLException {
         ArrayList<Courses> courses = new ArrayList<>();
             Statement statement = Database.getConnection().createStatement();
@@ -219,7 +239,6 @@ public class SchoolAPI {
     }
     public static void addStudentCourseRelation(Integer student_id, Integer course_id) throws SQLException {
             String query = "INSERT INTO attendance (student_id, course_id) VALUES (?, ?)";
-            System.out.println(query);
             PreparedStatement ps = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, student_id);
             ps.setInt(2, course_id);
@@ -236,6 +255,26 @@ public class SchoolAPI {
                     throw new SQLException("Creating relation failed, no ID obtained.");
                 }
             }
+    }
+
+    public static void addTeacherCourseRelation(Integer teacher_id, Integer course_id) throws SQLException {
+        String query = "INSERT INTO teacher_courses (teachers_id, course_id) VALUES (?, ?)";
+        PreparedStatement ps = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        ps.setInt(1, teacher_id);
+        ps.setInt(2, course_id);
+        int affectedRows = ps.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Creating relation failed, no rows affected.");
+        }
+
+        try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                return;
+            }
+            else {
+                throw new SQLException("Creating relation failed, no ID obtained.");
+            }
+        }
     }
 
     public static Students getStudentByUsername(String username) throws SQLException {

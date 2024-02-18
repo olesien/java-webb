@@ -4,29 +4,30 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Course Relation</title>
+    <title>Student Course Relation</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="register.css">
 </head>
     <body>
             <jsp:include page='../../fragments/nav.jsp'>
-                <jsp:param name="title" value="Register Course Relation"/>
+                <jsp:param name="title" value="Register Student Course Relation"/>
             </jsp:include>
 
              <div class="bar">
               <a class="bar-button studentsButton" href="/register?type=student">New Student</a>
               <a class="bar-button teachersButton" href="/register?type=teacher">New Teacher</a>
               <a class="bar-button newCourseButton" href="/register?type=course">New Course</a>
-              <a class="bar-button courseRelationButton selected" href="/register?type=courserelation">Student Course Relation</a>
+              <a class="bar-button studentCourseRelationButton" href="/register?type=studentcourserelation">Student Course Relation</a>
+              <a class="bar-button teacherCourseRelationButton selected" href="/register?type=teachercourserelation">Teacher Course Relation</a>
             </div>
         <div>
-            <div class="addCourseRelation">
-                <form action="register?type=courserelation" method="POST">
-                    <label for="courserelation_student">Student:</label><br>
-                    <select name="courserelation_student" id="courserelation_student" required>
-                        <option value="" selected>Select Student</option>
-                        <c:forEach var="student" items="${students}">
-                            <option value="<c:out value="${student.id}" />"><c:out value="${student.id}. ${student.fname} ${student.lname}" /></option>
+            <div class="addTeacherCourseRelation">
+                <form action="register?type=teachercourserelation" method="POST">
+                    <label for="courserelation_teacher">Teacher:</label><br>
+                    <select name="courserelation_teacher" id="courserelation_teacher" required>
+                        <option value="" selected>Select Teacher</option>
+                        <c:forEach var="teacher" items="${teachers}">
+                            <option value="<c:out value="${teacher.id}" />"><c:out value="${teacher.id}. ${teacher.fname} ${teacher.lname}" /></option>
                         </c:forEach>
                     </select><br>
                     <label for="courserelation_course">Course:</label><br>

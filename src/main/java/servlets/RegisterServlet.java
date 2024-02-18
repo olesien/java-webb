@@ -4,6 +4,7 @@ import enums.PrivType;
 import enums.UserType;
 import models.Courses;
 import models.Students;
+import models.Teachers;
 import models.UserBean;
 import models.db.SchoolAPI;
 
@@ -49,7 +50,7 @@ public class RegisterServlet extends HttpServlet {
         } else if (Objects.equals(req.getParameter("type"), "course")) {
             RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/course.jsp");
             dispatcher.forward(req, resp);
-        } else if (Objects.equals(req.getParameter("type"), "courserelation")) {
+        } else if (Objects.equals(req.getParameter("type"), "studentcourserelation")) {
             ArrayList<Courses> courses = null;
             try {
                 courses = SchoolAPI.getCourses();
@@ -64,7 +65,24 @@ public class RegisterServlet extends HttpServlet {
             }
             req.setAttribute("courses", courses);
             req.setAttribute("students", students);
-            RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/courserelation.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/studentcourserelation.jsp");
+            dispatcher.forward(req, resp);
+        }else if (Objects.equals(req.getParameter("type"), "teachercourserelation")) {
+            ArrayList<Courses> courses = null;
+            try {
+                courses = SchoolAPI.getCourses();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            ArrayList<Teachers> teachers = null;
+            try {
+                teachers = SchoolAPI.getTeachers();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            req.setAttribute("courses", courses);
+            req.setAttribute("teachers", teachers);
+            RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/teachercourserelation.jsp");
             dispatcher.forward(req, resp);
         }
     }
@@ -133,12 +151,22 @@ public class RegisterServlet extends HttpServlet {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-        } else if (Objects.equals(req.getParameter("type"), "courserelation")) {
+        } else if (Objects.equals(req.getParameter("type"), "studentcourserelation")) {
             System.out.println("received post for course+student relation");
             Integer student_id = Integer.valueOf(req.getParameter("courserelation_student"));
             Integer course_id = Integer.valueOf(req.getParameter("courserelation_course"));
             try {
                 SchoolAPI.addStudentCourseRelation(student_id, course_id);
+                resp.sendRedirect("/student_courses?status=success");
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }  else if (Objects.equals(req.getParameter("type"), "teachercourserelation")) {
+            System.out.println("received post for course+teacher relation");
+            Integer teacher_id = Integer.valueOf(req.getParameter("courserelation_teacher"));
+            Integer course_id = Integer.valueOf(req.getParameter("courserelation_course"));
+            try {
+                SchoolAPI.addTeacherCourseRelation(teacher_id, course_id);
                 resp.sendRedirect("/student_courses?status=success");
             } catch (SQLException e) {
                 throw new RuntimeException(e);
