@@ -1,6 +1,7 @@
 package servlets;
 
 import models.CourseBean;
+import models.StudentBean;
 import models.UserBean;
 import models.db.SchoolAPI;
 
@@ -25,19 +26,27 @@ public class StudentCoursesServlet extends HttpServlet {
             resp.sendRedirect("/login");
             return;
         }
-        String course_id = req.getParameter("id");
+        String student_id = req.getParameter("id");
         //We will get the courses by the student id
         ArrayList<CourseBean> courses = null;
         try {
-            courses = SchoolAPI.getCoursesByStudentId(Integer.valueOf(course_id));
+            courses = SchoolAPI.getCoursesByStudentId(Integer.valueOf(student_id));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        StudentBean student = null;
+        try {
+            student = SchoolAPI.getStudent(Integer.valueOf(student_id));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         req.setAttribute("name", "CourseBean");
         req.setAttribute("courses", courses);
+        req.setAttribute("student", student);
 
         // Forward the request to the JSP file
-        RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/courses.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/student_courses.jsp");
         dispatcher.forward(req, resp);
     }
 }

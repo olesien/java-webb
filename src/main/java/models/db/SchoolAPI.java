@@ -132,6 +132,24 @@ public class SchoolAPI {
         return course;
     }
 
+    public static StudentBean getStudent(Integer student_id) throws SQLException {
+        StudentBean student = new StudentBean();
+        String query = "SELECT * FROM students WHERE id = ? LIMIT 1";
+        PreparedStatement ps = Database.getConnection().prepareStatement(query);
+        ps.setInt(1, student_id);
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            student.setId(result.getInt("id"));
+            student.setFname(result.getString("fname"));
+            student.setLname(result.getString("lname"));
+            student.setTown(result.getString("town"));
+            student.setHobby(result.getString("hobby"));
+            student.setEmail(result.getString("email"));
+            student.setUsername(result.getString("username"));
+        }
+        return student;
+    }
+
     public static ArrayList<CourseBean> getCoursesByStudentId(Integer student_id) throws SQLException {
         ArrayList<CourseBean> courses = new ArrayList<>();
             String query = "SELECT DISTINCT(c.id), c.name, c.description, c.yhp FROM courses c INNER JOIN attendance sc ON c.id = sc.course_id WHERE sc.student_id = ? GROUP BY c.id";
