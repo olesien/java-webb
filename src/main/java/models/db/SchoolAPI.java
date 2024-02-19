@@ -36,6 +36,49 @@ public class SchoolAPI {
         return students;
     }
 
+    public static ArrayList<Students> getStudentsByCourseId(Integer course_id) throws SQLException {
+        ArrayList<Students> students = new ArrayList<>();
+        String query = "SELECT DISTINCT(s.id), s.fname, s.lname, s.username, s.email, s.town, s.hobby FROM students s INNER JOIN attendance sc ON s.id = sc.student_id WHERE sc.course_id = ? GROUP BY s.id";
+        PreparedStatement ps = Database.getConnection().prepareStatement(query);
+        ps.setInt(1, course_id);
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+
+            Students student = new Students();
+            student.setId(result.getInt("id"));
+            student.setFname(result.getString("fname"));
+            student.setLname(result.getString("lname"));
+            student.setTown(result.getString("town"));
+            student.setHobby(result.getString("hobby"));
+            student.setEmail(result.getString("email"));
+            student.setUsername(result.getString("username"));
+
+            students.add(student);
+        }
+        return students;
+    }
+    public static ArrayList<Teachers> getTeachersByCourseId(Integer course_id) throws SQLException {
+        ArrayList<Teachers> teachers = new ArrayList<>();
+        String query = "SELECT DISTINCT(t.id), t.fname, t.lname, t.username, t.email, t.town, t.hobby FROM teachers t INNER JOIN teacher_courses tc ON t.id = tc.teachers_id WHERE tc.course_id = ? GROUP BY t.id";
+        PreparedStatement ps = Database.getConnection().prepareStatement(query);
+        ps.setInt(1, course_id);
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+
+            Teachers teacher = new Teachers();
+            teacher.setId(result.getInt("id"));
+            teacher.setFname(result.getString("fname"));
+            teacher.setLname(result.getString("lname"));
+            teacher.setTown(result.getString("town"));
+            teacher.setHobby(result.getString("hobby"));
+            teacher.setEmail(result.getString("email"));
+            teacher.setUsername(result.getString("username"));
+
+            teachers.add(teacher);
+        }
+        return teachers;
+    }
+
     public static ArrayList<Teachers> getTeachers() throws SQLException {
         ArrayList<Teachers> teachers = new ArrayList<>();
         Statement statement = Database.getConnection().createStatement();
@@ -73,6 +116,21 @@ public class SchoolAPI {
                 courses.add(course);
             }
         return courses;
+    }
+
+    public static Courses getCourse(Integer course_id) throws SQLException {
+        Courses course = new Courses();
+        String query = "SELECT * FROM courses WHERE id = ? LIMIT 1";
+        PreparedStatement ps = Database.getConnection().prepareStatement(query);
+        ps.setInt(1, course_id);
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            course.setId( result.getInt("id"));
+            course.setName( result.getString("name"));
+            course.setDescription( result.getString("description"));
+            course.setYhp( result.getInt("yhp"));
+        }
+        return course;
     }
 
     public static ArrayList<Courses> getCoursesByStudentId(Integer student_id) throws SQLException {
@@ -113,27 +171,6 @@ public class SchoolAPI {
                 courses.add(course);
             }
         return courses;
-    }
-
-    public static ArrayList<StudentsWithCourses> getStudentsWithCourses() throws SQLException {
-        ArrayList<StudentsWithCourses> studentsWithCourses = new ArrayList<>();
-            Statement statement = Database.getConnection().createStatement();
-            String query = "SELECT s.id, s.fname, s.lname, s.town, s.hobby, IFNULL(GROUP_CONCAT(c.name SEPARATOR ', '), '') as courselist FROM students s LEFT JOIN attendance a ON s.id = a.student_id LEFT JOIN courses c ON c.id = a.course_id GROUP BY s.id";
-            System.out.println(query);
-            ResultSet result = statement.executeQuery(query);
-            while (result.next()) {
-
-                StudentsWithCourses studentsWithCourse = new StudentsWithCourses();
-                studentsWithCourse.setId(result.getInt("id"));
-                studentsWithCourse.setFname( result.getString("fname"));
-                studentsWithCourse.setLname( result.getString("lname"));
-                studentsWithCourse.setTown(result.getString("town"));
-                studentsWithCourse.setHobby(result.getString("hobby"));
-                studentsWithCourse.setCourses(result.getString("courselist"));
-
-                studentsWithCourses.add(studentsWithCourse);
-            }
-        return studentsWithCourses;
     }
 
     public static Students addStudent(String fname,String lname, String town, String hobby, String email, String phone, String username, String password) throws SQLException {

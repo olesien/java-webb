@@ -2,6 +2,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="models.Students" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="course" scope="request" type="models.Courses"/>
 
 <html>
 <head>
@@ -10,10 +11,10 @@
 </head>
     <body>
 
-            <jsp:include page='../fragments/nav.jsp'>
+            <jsp:include page='fragments/nav.jsp'>
                 <jsp:param name="title" value="Students"/>
             </jsp:include>
-                <h3 class="text-center">All students</h3>
+                <h3 class="text-center">Students that are a part of the course ${course.name}</h3>
                 <c:choose>
                     <c:when test="${not empty students}">
                         <table>

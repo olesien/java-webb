@@ -44,7 +44,7 @@ public class StudentsServlet extends HttpServlet {
         req.setAttribute("students", students);
 
         // Forward the request to the JSP file
-        RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/students.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/students.jsp");
         dispatcher.forward(req, resp);
 
         System.out.println("GET Request");

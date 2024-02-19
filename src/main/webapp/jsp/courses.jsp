@@ -29,8 +29,8 @@
                                     <td>${course.name}</td>
                                     <td>${course.description}</td>
                                     <td>${course.yhp}</td>
-                                    <td><a href="/students_by_course/${course.id}">See Students </a></td>
-                                    <td><a href="/teachers_by_course/${course.id}">See Teachers </a></td>
+                                    <td><a href="/students_by_course?id=${course.id}">See Students </a></td>
+                                    <td><a href="/teachers_by_course?id=${course.id}">See Teachers </a></td>
                                 </tr>
                             </c:forEach>
                         </table>

@@ -28,7 +28,7 @@ public class RegisterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserBean user = (UserBean) req.getSession().getAttribute("user");
         if (user == null) {
-            //We have a user
+            //We don't have a user
             resp.sendRedirect("/login");
             return;
         }
@@ -91,7 +91,7 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserBean user = (UserBean) req.getSession().getAttribute("user");
         if (user == null) {
-            //We have a user
+            //We don't have a user
             resp.sendRedirect("/login");
             return;
         }

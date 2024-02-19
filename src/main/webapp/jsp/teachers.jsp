@@ -2,6 +2,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="models.Students" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="course" scope="request" type="models.Courses"/>
 
 <html>
 <head>
@@ -10,12 +11,12 @@
 </head>
     <body>
 
-            <jsp:include page='../fragments/nav.jsp'>
-                <jsp:param name="title" value="Students"/>
+            <jsp:include page='./fragments/nav.jsp'>
+                <jsp:param name="title" value="Teachers"/>
             </jsp:include>
-                <h3 class="text-center">All students</h3>
+                <h3 class="text-center">Teachers that are a part of the course ${course.name}</h3>
                 <c:choose>
-                    <c:when test="${not empty students}">
+                    <c:when test="${not empty teachers}">
                         <table>
                             <tr>
                                 <th>Id</th>
@@ -25,20 +26,20 @@
                                 <th>Hobby</th>
                                 <th>Courses</th>
                             </tr>
-                            <c:forEach var="student" items="${students}">
+                            <c:forEach var="teacher" items="${teachers}">
                                 <tr>
-                                    <td>#${student.id}</td>
-                                    <td>${student.fname}</td>
-                                    <td>${student.lname}</td>
-                                    <td>${student.town}</td>
-                                    <td>${student.hobby}</td>
-                                    <td><a href="/courses_by_students?id=${student.id}">Active Courses </a></td>
+                                    <td>#${teacher.id}</td>
+                                    <td>${teacher.fname}</td>
+                                    <td>${teacher.lname}</td>
+                                    <td>${teacher.town}</td>
+                                    <td>${teacher.hobby}</td>
+                                    <td><a href="/courses_by_teachers?id=${teacher.id}">Active Courses </a></td>
                                 </tr>
                             </c:forEach>
                         </table>
                     </c:when>
                     <c:otherwise>
-                        <p>No students found.</p>
+                        <p>No teachers found.</p>
                     </c:otherwise>
                 </c:choose>
 
