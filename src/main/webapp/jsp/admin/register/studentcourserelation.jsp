@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="models.Students" %>
+<%@ page import="models.StudentBean" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -33,7 +33,7 @@
                     <label for="courserelation_course">Course:</label><br>
                     <select name="courserelation_course" id="courserelation_course" required>
                         <option value="" selected>Select Course</option>
-                        <c:forEach var="course" items="${courses}">
+                        <c:forEach var="course" items="${cours}">
                         <option value="<c:out value="${course.id}" />"><c:out value="${course.name}" /></option>
                         </c:forEach>
                     </select><br>

@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="models.Students" %>
+<%@ page import="models.StudentBean" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="course" scope="request" type="models.Courses"/>
+<jsp:useBean id="course" scope="request" type="models.CourseBean"/>
 
 <html>
 <head>
@@ -33,7 +33,7 @@
                                     <td>${teacher.lname}</td>
                                     <td>${teacher.town}</td>
                                     <td>${teacher.hobby}</td>
-                                    <td><a href="/courses_by_teachers?id=${teacher.id}">Active Courses </a></td>
+                                    <td><a href="/teacher_courses?id=${teacher.id}">Active Courses </a></td>
                                 </tr>
                             </c:forEach>
                         </table>

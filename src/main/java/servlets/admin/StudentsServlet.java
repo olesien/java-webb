@@ -1,7 +1,7 @@
-package servlets;
+package servlets.admin;
 
 import enums.UserType;
-import models.Students;
+import models.StudentBean;
 import models.UserBean;
 import models.db.SchoolAPI;
 
@@ -34,13 +34,13 @@ public class StudentsServlet extends HttpServlet {
             dispatcher.forward(req, resp);
             return;
         }
-        ArrayList<Students> students = null;
+        ArrayList<StudentBean> students = null;
         try {
             students = SchoolAPI.getStudents();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        req.setAttribute("name", "Students");
+        req.setAttribute("name", "StudentBean");
         req.setAttribute("students", students);
 
         // Forward the request to the JSP file

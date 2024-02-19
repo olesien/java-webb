@@ -1,7 +1,7 @@
 package servlets;
 
 import enums.UserType;
-import models.Courses;
+import models.CourseBean;
 import models.UserBean;
 import models.db.SchoolAPI;
 
@@ -29,13 +29,13 @@ public class YourCoursesServlet extends HttpServlet {
         if (user.getUserType() == UserType.teacher) {
 
             //We will get courses by the teacher id
-            ArrayList<Courses> courses = null;
+            ArrayList<CourseBean> courses = null;
             try {
                 courses = SchoolAPI.getCoursesByTeacherId(user.getId());
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            req.setAttribute("name", "Courses");
+            req.setAttribute("name", "CourseBean");
             req.setAttribute("courses", courses);
 
             // Forward the request to the JSP file
@@ -44,13 +44,13 @@ public class YourCoursesServlet extends HttpServlet {
 
         } else {
             //We will get the courses by the student id
-            ArrayList<Courses> courses = null;
+            ArrayList<CourseBean> courses = null;
             try {
                 courses = SchoolAPI.getCoursesByStudentId(user.getId());
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            req.setAttribute("name", "Courses");
+            req.setAttribute("name", "CourseBean");
             req.setAttribute("courses", courses);
 
             // Forward the request to the JSP file

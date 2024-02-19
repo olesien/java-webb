@@ -1,8 +1,8 @@
 package servlets;
 
 import enums.UserType;
-import models.Courses;
-import models.Students;
+import models.CourseBean;
+import models.StudentBean;
 import models.UserBean;
 import models.db.SchoolAPI;
 
@@ -30,7 +30,7 @@ public class StudentsByCourseServlet extends HttpServlet {
         }
         System.out.println(req.getRequestURI());
         String course_id = req.getParameter("id");
-        ArrayList<Students> students = null;
+        ArrayList<StudentBean> students = null;
         try {
             students = SchoolAPI.getStudentsByCourseId(Integer.valueOf(course_id));
         } catch (SQLException e) {
@@ -48,14 +48,14 @@ public class StudentsByCourseServlet extends HttpServlet {
                 return;
             }
         }
-        Courses course = null;
+        CourseBean course = null;
         try {
             course = SchoolAPI.getCourse(Integer.valueOf(course_id));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        req.setAttribute("name", "Students");
+        req.setAttribute("name", "StudentBean");
         req.setAttribute("students", students);
         req.setAttribute("course", course);
 

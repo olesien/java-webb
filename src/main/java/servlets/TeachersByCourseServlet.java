@@ -1,9 +1,9 @@
 package servlets;
 
 import enums.UserType;
-import models.Courses;
-import models.Students;
-import models.Teachers;
+import models.CourseBean;
+import models.StudentBean;
+import models.TeacherBean;
 import models.UserBean;
 import models.db.SchoolAPI;
 
@@ -31,14 +31,14 @@ public class TeachersByCourseServlet extends HttpServlet {
         }
         System.out.println(req.getRequestURI());
         String course_id = req.getParameter("id");
-        ArrayList<Teachers> teachers = null;
+        ArrayList<TeacherBean> teachers = null;
         try {
             teachers = SchoolAPI.getTeachersByCourseId(Integer.valueOf(course_id));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         if (user.getUserType() != UserType.teacher) {
-            ArrayList<Students> students = null;
+            ArrayList<StudentBean> students = null;
             try {
                 students = SchoolAPI.getStudentsByCourseId(Integer.valueOf(course_id));
             } catch (SQLException e) {
@@ -55,14 +55,14 @@ public class TeachersByCourseServlet extends HttpServlet {
             }
         }
 
-        Courses course = null;
+        CourseBean course = null;
         try {
             course = SchoolAPI.getCourse(Integer.valueOf(course_id));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        req.setAttribute("name", "Teachers");
+        req.setAttribute("name", "TeacherBean");
         req.setAttribute("teachers", teachers);
         req.setAttribute("course", course);
 

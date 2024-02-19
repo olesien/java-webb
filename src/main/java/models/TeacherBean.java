@@ -1,8 +1,10 @@
 package models;
 
+import enums.PrivType;
+
 import java.io.Serializable;
 
-public class Students implements Serializable {
+public class TeacherBean implements Serializable {
     private int id;
 
     public String fname;
@@ -20,7 +22,10 @@ public class Students implements Serializable {
 
     public String password;
 
-    public Students() {;
+    private PrivType privType;
+
+    public TeacherBean() {
+        ;
     }
 
     public int getId() {
@@ -93,5 +98,13 @@ public class Students implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public PrivType getPrivType() {
+        return privType;
+    }
+
+    public void setPrivType(PrivType privType) {
+        this.privType = privType;
     }
 }

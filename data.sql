@@ -56,7 +56,7 @@ CREATE TABLE teachers (
 CREATE TABLE teacher_courses (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     teachers_id INT NOT NULL REFERENCES teachers(id),
-    course_id INT NOT NULL REFERENCES courses(id)
+    course_id INT NOT NULL REFERENCES cours(id)
 );
 
 ALTER TABLE teachers ADD CONSTRAINT UC_teachers_email UNIQUE (email);

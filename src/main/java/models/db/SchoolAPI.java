@@ -1,10 +1,9 @@
 package models.db;
 
 import enums.PrivType;
-import models.Courses;
-import models.Students;
-import models.StudentsWithCourses;
-import models.Teachers;
+import models.CourseBean;
+import models.StudentBean;
+import models.TeacherBean;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,15 +15,15 @@ public class SchoolAPI {
 
     private SchoolAPI() { }
 
-    public static ArrayList<Students> getStudents() throws SQLException {
-        ArrayList<Students> students = new ArrayList<>();
+    public static ArrayList<StudentBean> getStudents() throws SQLException {
+        ArrayList<StudentBean> students = new ArrayList<>();
             Statement statement = Database.getConnection().createStatement();
             String query = "SELECT * FROM students";
             System.out.println(query);
             ResultSet result = statement.executeQuery(query);
             while (result.next()) {
 
-                Students student = new Students();
+                StudentBean student = new StudentBean();
                 student.setId(result.getInt("id"));
                 student.setFname(result.getString("fname"));
                 student.setLname(result.getString("lname"));
@@ -36,15 +35,15 @@ public class SchoolAPI {
         return students;
     }
 
-    public static ArrayList<Students> getStudentsByCourseId(Integer course_id) throws SQLException {
-        ArrayList<Students> students = new ArrayList<>();
+    public static ArrayList<StudentBean> getStudentsByCourseId(Integer course_id) throws SQLException {
+        ArrayList<StudentBean> students = new ArrayList<>();
         String query = "SELECT DISTINCT(s.id), s.fname, s.lname, s.username, s.email, s.town, s.hobby FROM students s INNER JOIN attendance sc ON s.id = sc.student_id WHERE sc.course_id = ? GROUP BY s.id";
         PreparedStatement ps = Database.getConnection().prepareStatement(query);
         ps.setInt(1, course_id);
         ResultSet result = ps.executeQuery();
         while (result.next()) {
 
-            Students student = new Students();
+            StudentBean student = new StudentBean();
             student.setId(result.getInt("id"));
             student.setFname(result.getString("fname"));
             student.setLname(result.getString("lname"));
@@ -57,15 +56,15 @@ public class SchoolAPI {
         }
         return students;
     }
-    public static ArrayList<Teachers> getTeachersByCourseId(Integer course_id) throws SQLException {
-        ArrayList<Teachers> teachers = new ArrayList<>();
+    public static ArrayList<TeacherBean> getTeachersByCourseId(Integer course_id) throws SQLException {
+        ArrayList<TeacherBean> teachers = new ArrayList<>();
         String query = "SELECT DISTINCT(t.id), t.fname, t.lname, t.username, t.email, t.town, t.hobby FROM teachers t INNER JOIN teacher_courses tc ON t.id = tc.teachers_id WHERE tc.course_id = ? GROUP BY t.id";
         PreparedStatement ps = Database.getConnection().prepareStatement(query);
         ps.setInt(1, course_id);
         ResultSet result = ps.executeQuery();
         while (result.next()) {
 
-            Teachers teacher = new Teachers();
+            TeacherBean teacher = new TeacherBean();
             teacher.setId(result.getInt("id"));
             teacher.setFname(result.getString("fname"));
             teacher.setLname(result.getString("lname"));
@@ -79,15 +78,15 @@ public class SchoolAPI {
         return teachers;
     }
 
-    public static ArrayList<Teachers> getTeachers() throws SQLException {
-        ArrayList<Teachers> teachers = new ArrayList<>();
+    public static ArrayList<TeacherBean> getTeachers() throws SQLException {
+        ArrayList<TeacherBean> teachers = new ArrayList<>();
         Statement statement = Database.getConnection().createStatement();
         String query = "SELECT * FROM teachers";
         System.out.println(query);
         ResultSet result = statement.executeQuery(query);
         while (result.next()) {
 
-            Teachers teacher = new Teachers();
+            TeacherBean teacher = new TeacherBean();
             teacher.setId(result.getInt("id"));
             teacher.setFname(result.getString("fname"));
             teacher.setLname(result.getString("lname"));
@@ -99,15 +98,15 @@ public class SchoolAPI {
         return teachers;
     }
 
-    public static ArrayList<Courses> getCourses() throws SQLException {
-        ArrayList<Courses> courses = new ArrayList<>();
+    public static ArrayList<CourseBean> getCourses() throws SQLException {
+        ArrayList<CourseBean> courses = new ArrayList<>();
             Statement statement = Database.getConnection().createStatement();
             String query = "SELECT * FROM courses";
             System.out.println(query);
             ResultSet result = statement.executeQuery(query);
             while (result.next()) {
 
-                Courses course = new Courses();
+                CourseBean course = new CourseBean();
                 course.setId( result.getInt("id"));
                 course.setName( result.getString("name"));
                 course.setDescription( result.getString("description"));
@@ -118,8 +117,8 @@ public class SchoolAPI {
         return courses;
     }
 
-    public static Courses getCourse(Integer course_id) throws SQLException {
-        Courses course = new Courses();
+    public static CourseBean getCourse(Integer course_id) throws SQLException {
+        CourseBean course = new CourseBean();
         String query = "SELECT * FROM courses WHERE id = ? LIMIT 1";
         PreparedStatement ps = Database.getConnection().prepareStatement(query);
         ps.setInt(1, course_id);
@@ -133,15 +132,15 @@ public class SchoolAPI {
         return course;
     }
 
-    public static ArrayList<Courses> getCoursesByStudentId(Integer student_id) throws SQLException {
-        ArrayList<Courses> courses = new ArrayList<>();
+    public static ArrayList<CourseBean> getCoursesByStudentId(Integer student_id) throws SQLException {
+        ArrayList<CourseBean> courses = new ArrayList<>();
             String query = "SELECT DISTINCT(c.id), c.name, c.description, c.yhp FROM courses c INNER JOIN attendance sc ON c.id = sc.course_id WHERE sc.student_id = ? GROUP BY c.id";
             PreparedStatement ps = Database.getConnection().prepareStatement(query);
             ps.setInt(1, student_id);
             ResultSet result = ps.executeQuery();
             while (result.next()) {
 
-                Courses course = new Courses();
+                CourseBean course = new CourseBean();
                 course.setId( result.getInt("id"));
                 course.setName( result.getString("name"));
                 course.setDescription( result.getString("description"));
@@ -153,8 +152,8 @@ public class SchoolAPI {
         return courses;
     }
 
-    public static ArrayList<Courses> getCoursesByTeacherId(Integer teacher_id) throws SQLException {
-        ArrayList<Courses> courses = new ArrayList<>();
+    public static ArrayList<CourseBean> getCoursesByTeacherId(Integer teacher_id) throws SQLException {
+        ArrayList<CourseBean> courses = new ArrayList<>();
             String query = "SELECT DISTINCT(c.id), c.name, c.description, c.yhp FROM courses c INNER JOIN teacher_courses tc ON c.id = tc.course_id WHERE tc.teachers_id = ? GROUP BY c.id";
             PreparedStatement ps = Database.getConnection().prepareStatement(query);
             ps.setInt(1, teacher_id);
@@ -162,7 +161,7 @@ public class SchoolAPI {
             ResultSet result = ps.executeQuery();
             while (result.next()) {
 
-                Courses course = new Courses();
+                CourseBean course = new CourseBean();
                 course.setId( result.getInt("id"));
                 course.setName( result.getString("name"));
                 course.setDescription( result.getString("description"));
@@ -173,7 +172,7 @@ public class SchoolAPI {
         return courses;
     }
 
-    public static Students addStudent(String fname,String lname, String town, String hobby, String email, String phone, String username, String password) throws SQLException {
+    public static StudentBean addStudent(String fname, String lname, String town, String hobby, String email, String phone, String username, String password) throws SQLException {
             String query = "INSERT INTO students (fname, lname, town, hobby, email, phone, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             System.out.println(query);
             PreparedStatement ps = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -192,7 +191,7 @@ public class SchoolAPI {
 
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    Students student = new Students();
+                    StudentBean student = new StudentBean();
 
                     student.setId((int) generatedKeys.getLong(1));
                     student.setFname(fname);
@@ -209,7 +208,7 @@ public class SchoolAPI {
                 }
             }
     }
-    public static Teachers addTeacher(String fname, String lname, String town, String hobby, String email, String phone, String username, String password, PrivType priv) throws SQLException {
+    public static TeacherBean addTeacher(String fname, String lname, String town, String hobby, String email, String phone, String username, String password, PrivType priv) throws SQLException {
         String query = "INSERT INTO teachers (fname, lname, town, hobby, email, phone, username, password, privilage_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, fname);
@@ -228,7 +227,7 @@ public class SchoolAPI {
 
         try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
             if (generatedKeys.next()) {
-                Teachers teacher = new Teachers();
+                TeacherBean teacher = new TeacherBean();
 
                 teacher.setId((int) generatedKeys.getLong(1));
                 teacher.setFname(fname);
@@ -247,7 +246,7 @@ public class SchoolAPI {
         }
     }
 
-    public static Courses addCourse(String name, String description, Integer yhp) throws SQLException {
+    public static CourseBean addCourse(String name, String description, Integer yhp) throws SQLException {
             String query = "INSERT INTO courses (name, description, yhp) VALUES (?, ?, ?)";
             System.out.println(query);
             PreparedStatement ps = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -261,7 +260,7 @@ public class SchoolAPI {
 
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    Courses course = new Courses();
+                    CourseBean course = new CourseBean();
                     course.setId((int) generatedKeys.getLong(1));
                     course.setName(name);
                     course.setDescription(description);
@@ -314,14 +313,14 @@ public class SchoolAPI {
         }
     }
 
-    public static Students getStudentByUsername(String username) throws SQLException {
+    public static StudentBean getStudentByUsername(String username) throws SQLException {
             //fname, lname, town, hobby, email, phone, username, password
             String query = "SELECT id, fname, lname, town, hobby, email, phone, username, password from students WHERE username = ? LIMIT 1";
             PreparedStatement ps = Database.getConnection().prepareStatement(query);
             ps.setString(1, username);
             ResultSet result = ps.executeQuery();
             while (result.next()) {
-                Students student = new Students();
+                StudentBean student = new StudentBean();
                 student.setId(result.getInt("id"));
                 student.setFname(result.getString("fname"));
                 student.setLname(result.getString("lname"));
@@ -337,7 +336,7 @@ public class SchoolAPI {
         return null;
     }
 
-    public static Teachers getTeacherByUsername(String username) throws SQLException {
+    public static TeacherBean getTeacherByUsername(String username) throws SQLException {
             //fname, lname, town, hobby, email, phone, username, password
             String query = "SELECT id, fname, lname, town, hobby, email, phone, username, password, privilage_type from teachers WHERE username = ? LIMIT 1";
             PreparedStatement ps = Database.getConnection().prepareStatement(query);
@@ -345,7 +344,7 @@ public class SchoolAPI {
             System.out.println(ps);
             ResultSet result = ps.executeQuery();
             while (result.next()) {
-                Teachers teacher = new Teachers();
+                TeacherBean teacher = new TeacherBean();
                 teacher.setId(result.getInt("id"));
                 teacher.setFname(result.getString("fname"));
                 teacher.setLname(result.getString("lname"));

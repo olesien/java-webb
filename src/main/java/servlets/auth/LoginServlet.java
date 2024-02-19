@@ -1,9 +1,9 @@
-package servlets;
+package servlets.auth;
 
 import enums.PrivType;
 import enums.UserType;
-import models.Students;
-import models.Teachers;
+import models.StudentBean;
+import models.TeacherBean;
 import models.UserBean;
 import models.db.Auth;
 import models.db.SchoolAPI;
@@ -31,13 +31,9 @@ public class LoginServlet extends HttpServlet {
         if (user != null) {
 
             //We have a user
-            resp.sendRedirect("/home");
+            resp.sendRedirect("/your_courses");
             return;
         }
-
-        //ArrayList<Courses> courses = SchoolAPI.getCourses();
-        //req.setAttribute("name", "Courses");
-        //req.setAttribute("courses", courses);
 
         // Forward the request to the JSP file
         RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/login.jsp");
@@ -51,7 +47,7 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
         if (Objects.equals(req.getParameter("type"), "student")) {
             System.out.println("Student login attempt");
-            Students student = null;
+            StudentBean student = null;
             try {
                 student = SchoolAPI.getStudentByUsername(username);
             } catch (SQLException e) {
@@ -84,7 +80,7 @@ public class LoginServlet extends HttpServlet {
         } else if (Objects.equals(req.getParameter("type"), "teacher")) {
             System.out.println("Teacher login attempt");
 
-            Teachers teacher = null;
+            TeacherBean teacher = null;
             try {
                 teacher = SchoolAPI.getTeacherByUsername(username);
             } catch (SQLException e) {
@@ -116,16 +112,6 @@ public class LoginServlet extends HttpServlet {
         } else {
             System.out.println("Unknown Attempt");
         }
-
-        //String name = req.getParameter("name");
-        //String description = req.getParameter("description");
-        //String yhp = req.getParameter("yhp");
-        //try {
-        //    SchoolAPI.addCourse(name, description, Integer.valueOf(yhp));
-        //    resp.sendRedirect("/courses?status=success");
-        //} catch (SQLException e) {
-        //    throw new RuntimeException(e);
-        //}
 
     }
 }

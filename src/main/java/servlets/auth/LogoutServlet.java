@@ -1,4 +1,4 @@
-package servlets;
+package servlets.auth;
 
 import enums.PrivType;
 import enums.UserType;

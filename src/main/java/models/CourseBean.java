@@ -2,7 +2,7 @@ package models;
 
 import java.io.Serializable;
 
-public class Courses implements Serializable {
+public class CourseBean implements Serializable {
     private int id;
 
     public String name;
@@ -11,7 +11,7 @@ public class Courses implements Serializable {
 
     public int yhp;
 
-    public Courses() {
+    public CourseBean() {
     }
 
     public int getId() {

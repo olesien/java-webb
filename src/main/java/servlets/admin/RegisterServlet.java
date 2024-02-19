@@ -1,10 +1,10 @@
-package servlets;
+package servlets.admin;
 
 import enums.PrivType;
 import enums.UserType;
-import models.Courses;
-import models.Students;
-import models.Teachers;
+import models.CourseBean;
+import models.StudentBean;
+import models.TeacherBean;
 import models.UserBean;
 import models.db.SchoolAPI;
 
@@ -51,13 +51,13 @@ public class RegisterServlet extends HttpServlet {
             RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/course.jsp");
             dispatcher.forward(req, resp);
         } else if (Objects.equals(req.getParameter("type"), "studentcourserelation")) {
-            ArrayList<Courses> courses = null;
+            ArrayList<CourseBean> courses = null;
             try {
                 courses = SchoolAPI.getCourses();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            ArrayList<Students> students = null;
+            ArrayList<StudentBean> students = null;
             try {
                 students = SchoolAPI.getStudents();
             } catch (SQLException e) {
@@ -68,13 +68,13 @@ public class RegisterServlet extends HttpServlet {
             RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/studentcourserelation.jsp");
             dispatcher.forward(req, resp);
         }else if (Objects.equals(req.getParameter("type"), "teachercourserelation")) {
-            ArrayList<Courses> courses = null;
+            ArrayList<CourseBean> courses = null;
             try {
                 courses = SchoolAPI.getCourses();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            ArrayList<Teachers> teachers = null;
+            ArrayList<TeacherBean> teachers = null;
             try {
                 teachers = SchoolAPI.getTeachers();
             } catch (SQLException e) {

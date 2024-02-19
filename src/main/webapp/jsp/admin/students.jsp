@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="models.Students" %>
+<%@ page import="models.StudentBean" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
@@ -32,7 +32,7 @@
                                     <td>${student.lname}</td>
                                     <td>${student.town}</td>
                                     <td>${student.hobby}</td>
-                                    <td><a href="/courses_by_students?id=${student.id}">Active Courses </a></td>
+                                    <td><a href="/student_courses?id=${student.id}">Active Courses </a></td>
                                 </tr>
                             </c:forEach>
                         </table>
