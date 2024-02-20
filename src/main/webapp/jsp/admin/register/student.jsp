@@ -5,7 +5,7 @@
 <head>
     <title>Add Student</title>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet" type="text/css" href="register.css">
+    <link rel="stylesheet" type="text/css" href="admin.css">
 </head>
     <body>
             <jsp:include page='../../fragments/nav.jsp'>

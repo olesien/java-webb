@@ -3,6 +3,7 @@ package models.db;
 import enums.PrivType;
 import models.CourseBean;
 import models.StudentBean;
+import models.StudentWithCountBean;
 import models.TeacherBean;
 
 import java.sql.PreparedStatement;
@@ -32,6 +33,27 @@ public class SchoolAPI {
 
                 students.add(student);
             }
+        return students;
+    }
+
+    public static ArrayList<StudentWithCountBean> getStudentsWithCount(Integer total_courses) throws SQLException {
+        ArrayList<StudentWithCountBean> students = new ArrayList<>();
+        Statement statement = Database.getConnection().createStatement();
+        String query = "SELECT s.id, s.town, s.hobby, s.lname, s.fname, s.email, s.username, COUNT(a.id) as count FROm students s INNER JOIN attendance a ON a.student_id = s.id GROUP BY s.id ORDER BY count DESC";
+        System.out.println(query);
+        ResultSet result = statement.executeQuery(query);
+        while (result.next()) {
+
+            StudentWithCountBean student = new StudentWithCountBean();
+            student.setId(result.getInt("id"));
+            student.setFname(result.getString("fname"));
+            student.setLname(result.getString("lname"));
+            student.setTown(result.getString("town"));
+            student.setHobby(result.getString("hobby"));
+            student.setCount(result.getInt("count"));
+            student.setAverage((float) Math.round(((float) student.getCount() / total_courses) * 10000) / 100); //Calc avg
+            students.add(student);
+        }
         return students;
     }
 

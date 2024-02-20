@@ -32,7 +32,7 @@ public class RegisterServlet extends HttpServlet {
             resp.sendRedirect("/login");
             return;
         }
-        if (user.getUserType() != UserType.teacher || user.getPrivType() != PrivType.superadmin) {
+        if (user.getUserType() != UserType.teacher || user.getPrivType() == PrivType.user) {
             //User lacks access.
             req.setAttribute("message", "Permission Denied");
             req.setAttribute("code", 403);
@@ -95,7 +95,7 @@ public class RegisterServlet extends HttpServlet {
             resp.sendRedirect("/login");
             return;
         }
-        if (user.getUserType() != UserType.teacher || user.getPrivType() != PrivType.superadmin) {
+        if (user.getUserType() != UserType.teacher || user.getPrivType() == PrivType.user) {
             //User lacks access.
             req.setAttribute("message", "Permission Denied");
             req.setAttribute("code", 403);
@@ -133,6 +133,10 @@ public class RegisterServlet extends HttpServlet {
             String username = req.getParameter("teacher_username");
             String password = req.getParameter("teacher_password");
             PrivType priv = PrivType.valueOf(req.getParameter("teacher_priv"));
+            if (user.getPrivType() != PrivType.superadmin && priv == PrivType.superadmin) {
+                //Reset to admin
+                priv = PrivType.admin;
+            }
             try {
                 SchoolAPI.addTeacher(fname, lname, town, hobby, email, phone, username, password, priv);
                 resp.sendRedirect("/students?status=success");

@@ -1,7 +1,4 @@
 <jsp:useBean id="user" scope="session" type="models.UserBean"/>
-<%@ page import="models.UserBean" %>
-<%@ page import="enums.UserType" %>
-<%@ page import="enums.PrivType" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="header">
 
@@ -14,8 +11,13 @@
                        <a href="/students">Students</a>
                        <a href="/courses">Courses</a>
                        <c:choose>
-                           <c:when test="${sessionScope.user.privType eq 'superadmin'}">
+                           <c:when test="${sessionScope.user.privType != 'user'}">
                                <a href="/register?type=student">Register</a>
+                           </c:when>
+                       </c:choose>
+                       <c:choose>
+                           <c:when test="${sessionScope.user.privType eq 'superadmin'}">
+                               <a href="/stats?type=student_course_average">Statistics</a>
                            </c:when>
                        </c:choose>
                    </c:when>

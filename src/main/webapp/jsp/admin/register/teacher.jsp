@@ -1,11 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="models.StudentBean" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="user" scope="session" type="models.UserBean"/>
+
 <html>
 <head>
     <title>Add Teacher</title>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet" type="text/css" href="register.css">
+    <link rel="stylesheet" type="text/css" href="admin.css">
 </head>
     <body>
             <jsp:include page='../../fragments/nav.jsp'>
@@ -50,7 +51,9 @@
                     <select name="teacher_priv" id="teacher_priv">
                         <option value="user" selected>User</option>
                         <option value="admin">Admin</option>
-                        <option value="superadmin">Superadmin</option>
+                        <c:if test = "${user.privType eq 'superadmin'}">
+                            <option value="superadmin">Superadmin</option>
+                        </c:if>
                     </select><br>
 
                     <input type="submit" value="Submit">
