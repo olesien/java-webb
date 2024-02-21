@@ -54,8 +54,14 @@ public class StatsServlet extends HttpServlet {
             }
 
         } else if (Objects.equals(req.getParameter("type"), "course_popularity")) {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/teacher.jsp");
-            dispatcher.forward(req, resp);
+            try {
+                ArrayList<CourseWithPopularityBean> courses = SchoolAPI.getCoursesByPopularity();
+                req.setAttribute("courses", courses);
+                RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/stats/course_popularity.jsp");
+                dispatcher.forward(req, resp);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

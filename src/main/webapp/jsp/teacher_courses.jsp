@@ -1,5 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %> <%@ page
-import="java.util.ArrayList" %> <%@ page import="models.CourseBean" %> <%@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="teacher" scope="request" type="models.TeacherBean"/>
+<%@
 taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
     <head>
@@ -10,7 +11,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <jsp:include page="fragments/nav.jsp">
             <jsp:param name="title" value="Courses" />
         </jsp:include>
-        <h3 class="text-center">All courses</h3>
+        <h3 class="text-center">Showing courses for the teacher ${teacher.fname} ${teacher.lname}</h3>
         <c:choose>
             <c:when test="${not empty courses}">
                 <table>

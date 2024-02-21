@@ -1,10 +1,7 @@
 package models.db;
 
 import enums.PrivType;
-import models.CourseBean;
-import models.StudentBean;
-import models.StudentWithCountBean;
-import models.TeacherBean;
+import models.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -139,6 +136,26 @@ public class SchoolAPI {
         return courses;
     }
 
+    public static ArrayList<CourseWithPopularityBean> getCoursesByPopularity() throws SQLException {
+        ArrayList<CourseWithPopularityBean> courses = new ArrayList<>();
+        Statement statement = Database.getConnection().createStatement();
+        String query = "SELECT c.id, c.name, c.description, c.yhp, COUNT(a.id) as popularity FROM courses c INNER JOIN attendance a ON a.course_id = c.id GROUP BY c.id ORDER BY popularity DESC";
+        System.out.println(query);
+        ResultSet result = statement.executeQuery(query);
+        while (result.next()) {
+
+            CourseWithPopularityBean course = new CourseWithPopularityBean();
+            course.setId( result.getInt("id"));
+            course.setName( result.getString("name"));
+            course.setDescription( result.getString("description"));
+            course.setYhp( result.getInt("yhp"));
+            course.setPopularity( result.getInt("popularity"));
+
+            courses.add(course);
+        }
+        return courses;
+    }
+
     public static CourseBean getCourse(Integer course_id) throws SQLException {
         CourseBean course = new CourseBean();
         String query = "SELECT * FROM courses WHERE id = ? LIMIT 1";
@@ -170,6 +187,24 @@ public class SchoolAPI {
             student.setUsername(result.getString("username"));
         }
         return student;
+    }
+
+    public static TeacherBean getTeacher(Integer teacher_id) throws SQLException {
+        TeacherBean teacher = new TeacherBean();
+        String query = "SELECT * FROM students WHERE id = ? LIMIT 1";
+        PreparedStatement ps = Database.getConnection().prepareStatement(query);
+        ps.setInt(1, teacher_id);
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            teacher.setId(result.getInt("id"));
+            teacher.setFname(result.getString("fname"));
+            teacher.setLname(result.getString("lname"));
+            teacher.setTown(result.getString("town"));
+            teacher.setHobby(result.getString("hobby"));
+            teacher.setEmail(result.getString("email"));
+            teacher.setUsername(result.getString("username"));
+        }
+        return teacher;
     }
 
     public static ArrayList<CourseBean> getCoursesByStudentId(Integer student_id) throws SQLException {
