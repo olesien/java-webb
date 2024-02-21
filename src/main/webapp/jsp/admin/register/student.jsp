@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="models.StudentBean" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Add Student</title>
@@ -20,6 +19,12 @@
                  <a class="bar-button teacherCourseRelationButton" href="/register?type=teachercourserelation">Teacher Course Relation</a>
             </div>
         <div>
+            <c:if test="${error_message != null}">
+                 <p class="error">${error_message}<p/>
+            </c:if>
+            <c:if test="${success_message != null}">
+                <p class="success">${success_message}<p/>
+            </c:if>
             <div class="students">
                 <form action="/register?type=student" method="POST">
                     <label for="username">Username:</label><br>

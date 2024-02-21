@@ -21,6 +21,12 @@
                  <a class="bar-button teacherCourseRelationButton" href="/register?type=teachercourserelation">Teacher Course Relation</a>
             </div>
         <div>
+            <c:if test="${error_message != null}">
+                <p class="error">${error_message}<p/>
+            </c:if>
+            <c:if test="${success_message != null}">
+                <p class="success">${success_message}<p/>
+            </c:if>
             <div class="teachers">
                 <form action="/register?type=teacher" method="POST">
                     <label for="teacher_username">Username:</label><br>

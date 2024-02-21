@@ -21,6 +21,12 @@
                  <a class="bar-button teacherCourseRelationButton" href="/register?type=teachercourserelation">Teacher Course Relation</a>
             </div>
         <div>
+            <c:if test="${error_message != null}">
+                <p class="error">${error_message}<p/>
+            </c:if>
+            <c:if test="${success_message != null}">
+                <p class="success">${success_message}<p/>
+            </c:if>
             <div class="addStudentCourseRelation">
                 <form action="register?type=studentcourserelation" method="POST">
                     <label for="courserelation_student">Student:</label><br>
@@ -33,7 +39,7 @@
                     <label for="courserelation_course">Course:</label><br>
                     <select name="courserelation_course" id="courserelation_course" required>
                         <option value="" selected>Select Course</option>
-                        <c:forEach var="course" items="${cours}">
+                        <c:forEach var="course" items="${courses}">
                         <option value="<c:out value="${course.id}" />"><c:out value="${course.name}" /></option>
                         </c:forEach>
                     </select><br>

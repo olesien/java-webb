@@ -9,6 +9,9 @@
 </head>
     <body>
             <div class="login-container">
+                <c:if test="${error_message != null}">
+                    <p class="error">${error_message}<p/>
+                </c:if>
                <form class="login" method="POST">
                    <label for="type">As:</label><br>
                    <select name="type" id="type">

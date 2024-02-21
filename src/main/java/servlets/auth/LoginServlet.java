@@ -45,19 +45,23 @@ public class LoginServlet extends HttpServlet {
         String type = req.getParameter("type");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        if (Objects.equals(req.getParameter("type"), "student")) {
+        if (Objects.equals(type, "student")) {
             System.out.println("Student login attempt");
             StudentBean student = null;
             try {
                 student = SchoolAPI.getStudentByUsername(username);
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                req.setAttribute("error_message", e.getMessage());
+                RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/login.jsp");
+                dispatcher.forward(req, resp);
             }
 
             //Check if student matches password
 
             if (student == null) {
-                System.out.println("No username found");
+                req.setAttribute("error_message", "No user was found with that name");
+                RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/login.jsp");
+                dispatcher.forward(req, resp);
                 return;
             }
             if (Auth.matches(password, student.getPassword())) {
@@ -74,23 +78,29 @@ public class LoginServlet extends HttpServlet {
                 req.getSession().setAttribute("user", user);
                 resp.sendRedirect("/login");
             } else {
-                System.out.println("Login failed");
+                req.setAttribute("error_message", "Passwords do not match");
+                RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/login.jsp");
+                dispatcher.forward(req, resp);
             }
 
-        } else if (Objects.equals(req.getParameter("type"), "teacher")) {
+        } else if (Objects.equals(type, "teacher")) {
             System.out.println("Teacher login attempt");
 
             TeacherBean teacher = null;
             try {
                 teacher = SchoolAPI.getTeacherByUsername(username);
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                req.setAttribute("error_message", e.getMessage());
+                RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/login.jsp");
+                dispatcher.forward(req, resp);
             }
 
             //Check if teacher matches password
 
             if (teacher == null) {
-                System.out.println("No username found");
+                req.setAttribute("error_message", "No user was found with that name");
+                RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/login.jsp");
+                dispatcher.forward(req, resp);
                 return;
             }
             if (Auth.matches(password, teacher.getPassword())) {
@@ -107,10 +117,13 @@ public class LoginServlet extends HttpServlet {
                 req.getSession().setAttribute("user", user);
                 resp.sendRedirect("/login");
             } else {
-                System.out.println("Login failed");
+                req.setAttribute("error_message", "Passwords do not match");
+                RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/login.jsp");
+                dispatcher.forward(req, resp);
             }
         } else {
             System.out.println("Unknown Attempt");
+            resp.sendRedirect("/login");
         }
 
     }

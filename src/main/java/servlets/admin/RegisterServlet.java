@@ -22,7 +22,43 @@ import java.util.Objects;
 @WebServlet(urlPatterns = "/register")
 public class RegisterServlet extends HttpServlet {
 
+    private void getStudentCourseRelation (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ArrayList<CourseBean> courses = null;
+        try {
+            courses = SchoolAPI.getCourses();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ArrayList<StudentBean> students = null;
+        try {
+            students = SchoolAPI.getStudents();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        req.setAttribute("courses", courses);
+        req.setAttribute("students", students);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/studentcourserelation.jsp");
+        dispatcher.forward(req, resp);
+    }
 
+    private void getTeacherCourseRelation (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ArrayList<CourseBean> courses = null;
+        try {
+            courses = SchoolAPI.getCourses();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ArrayList<TeacherBean> teachers = null;
+        try {
+            teachers = SchoolAPI.getTeachers();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        req.setAttribute("courses", courses);
+        req.setAttribute("teachers", teachers);
+        RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/teachercourserelation.jsp");
+        dispatcher.forward(req, resp);
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -51,39 +87,9 @@ public class RegisterServlet extends HttpServlet {
             RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/course.jsp");
             dispatcher.forward(req, resp);
         } else if (Objects.equals(req.getParameter("type"), "studentcourserelation")) {
-            ArrayList<CourseBean> courses = null;
-            try {
-                courses = SchoolAPI.getCourses();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            ArrayList<StudentBean> students = null;
-            try {
-                students = SchoolAPI.getStudents();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            req.setAttribute("courses", courses);
-            req.setAttribute("students", students);
-            RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/studentcourserelation.jsp");
-            dispatcher.forward(req, resp);
+            getStudentCourseRelation(req, resp);
         }else if (Objects.equals(req.getParameter("type"), "teachercourserelation")) {
-            ArrayList<CourseBean> courses = null;
-            try {
-                courses = SchoolAPI.getCourses();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            ArrayList<TeacherBean> teachers = null;
-            try {
-                teachers = SchoolAPI.getTeachers();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            req.setAttribute("courses", courses);
-            req.setAttribute("teachers", teachers);
-            RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/teachercourserelation.jsp");
-            dispatcher.forward(req, resp);
+            getTeacherCourseRelation(req, resp);
         }
     }
 
@@ -114,11 +120,16 @@ public class RegisterServlet extends HttpServlet {
             String phone = req.getParameter("phone");
             String username = req.getParameter("username");
             String password = req.getParameter("password");
+
             try {
                 SchoolAPI.addStudent(fname,lname, town, hobby, email, phone, username, password);
-                resp.sendRedirect("/students?status=success");
+                req.setAttribute("success_message", "Student successfully added!");
+                RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/student.jsp");
+                dispatcher.forward(req, resp);
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                req.setAttribute("error_message", e.getMessage());
+                RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/student.jsp");
+                dispatcher.forward(req, resp);
             }
 
         }
@@ -139,9 +150,13 @@ public class RegisterServlet extends HttpServlet {
             }
             try {
                 SchoolAPI.addTeacher(fname, lname, town, hobby, email, phone, username, password, priv);
-                resp.sendRedirect("/students?status=success");
+                req.setAttribute("success_message", "Teacher successfully added!");
+                RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/teacher.jsp");
+                dispatcher.forward(req, resp);
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                req.setAttribute("error_message", e.getMessage());
+                RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/teacher.jsp");
+                dispatcher.forward(req, resp);
             }
         }
         else if (Objects.equals(req.getParameter("type"), "course")) {
@@ -153,7 +168,9 @@ public class RegisterServlet extends HttpServlet {
                 SchoolAPI.addCourse(name, description, Integer.valueOf(yhp));
                 resp.sendRedirect("/students?status=success");
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                req.setAttribute("error_message", e.getMessage());
+                RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/course.jsp");
+                dispatcher.forward(req, resp);
             }
         } else if (Objects.equals(req.getParameter("type"), "studentcourserelation")) {
             System.out.println("received post for course+student relation");
@@ -161,9 +178,11 @@ public class RegisterServlet extends HttpServlet {
             Integer course_id = Integer.valueOf(req.getParameter("courserelation_course"));
             try {
                 SchoolAPI.addStudentCourseRelation(student_id, course_id);
-                resp.sendRedirect("/student_courses?status=success");
+                req.setAttribute("success_message", "Student Course Relation successfully added!");
+                getStudentCourseRelation(req, resp);
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                req.setAttribute("error_message", e.getMessage());
+                getStudentCourseRelation(req, resp);
             }
         }  else if (Objects.equals(req.getParameter("type"), "teachercourserelation")) {
             System.out.println("received post for course+teacher relation");
@@ -171,9 +190,11 @@ public class RegisterServlet extends HttpServlet {
             Integer course_id = Integer.valueOf(req.getParameter("courserelation_course"));
             try {
                 SchoolAPI.addTeacherCourseRelation(teacher_id, course_id);
-                resp.sendRedirect("/student_courses?status=success");
+                req.setAttribute("success_message", "Teacher Course Relation successfully added!");
+                getTeacherCourseRelation(req, resp);
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                req.setAttribute("error_message", e.getMessage());
+                getTeacherCourseRelation(req, resp);
             }
         }
     }

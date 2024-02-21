@@ -64,3 +64,5 @@ ALTER TABLE teachers ADD CONSTRAINT UC_teachers_username UNIQUE (username);
 
 ALTER TABLE students ADD CONSTRAINT UC_students_email UNIQUE (email);
 ALTER TABLE students ADD CONSTRAINT UC_students_username UNIQUE (username);
+ALTER TABLE attendance ADD CONSTRAINT unique_combo_att UNIQUE (student_id, course_id);
+ALTER TABLE teacher_courses ADD CONSTRAINT unique_combo_sc UNIQUE (teachers_id, course_id);
