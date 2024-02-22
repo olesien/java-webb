@@ -14,6 +14,6 @@
                <div>
                     <p class="error"><%= request.getAttribute("code") %> - <%=request.getAttribute("message") %></p>
                </div>
-
+                 <jsp:include page='./fragments/footer.jsp' />
     </body>
 </html>

@@ -44,5 +44,6 @@
                         </c:otherwise>
                     </c:choose>
                 </main>
+                <jsp:include page='./fragments/footer.jsp' />
     </body>
 </html>

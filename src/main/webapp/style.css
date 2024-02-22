@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -120,4 +124,19 @@ form input[type=submit] {
 
 .p-2 {
     padding: 2rem;
+}
+
+footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    background-color: black;
+    color:white;
+    overflow: hidden;
+}
+
+footer p {
+    padding: 0.5rem 1rem;
 }

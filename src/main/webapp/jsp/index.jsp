@@ -16,7 +16,7 @@
                 <p>On this page you can do all you could ever need, either as a student or a teacher! Please note that students are created by
                 the teachers. If you are missing login information please message your teacher.</p>
             </main>
-
+            <jsp:include page='./fragments/footer.jsp' />
 
 
     </body>

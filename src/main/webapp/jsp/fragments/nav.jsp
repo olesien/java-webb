@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="header">
+<header class="header">
        <a href="/"><img src="logo.png" class="logo" alt="Grit Logo"/></a>
        <nav>
            <a href="/courses" class="${param.title == 'Courses' ? "activeLink" : ""}">All Courses</a>
@@ -30,4 +30,4 @@
                <a href="/login">Login</a>
            </c:if>
        </nav>
- </div>
+ </header>

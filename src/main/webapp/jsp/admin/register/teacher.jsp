@@ -66,7 +66,7 @@
                     <input type="submit" value="Submit">
                 </form>
             </div>
-
         </main>
+        <jsp:include page='../../fragments/footer.jsp' />
     </body>
 </html>
