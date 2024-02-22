@@ -70,18 +70,18 @@ INSERT INTO courses (name, description, yhp) VALUES ('English', 'Learn engrish',
 INSERT INTO courses (name, description, yhp) VALUES ('Polish', 'Learn polska', 50);
 
 #Password is "test" here on all
-INSERT INTO students (username, town, hobby, fname, lname, email, phone, password) VALUES ('Max', 'Malmö', 'Programming' 'Max', 'Ulfson', 'linus@gmail.com', '123456', '9dc77f50f0cd4a240f64da417026aee60a96732c2b809f49659922098fe3c18b90170ff2b5151a15c493d1550fbc00e8');
-INSERT INTO students (username, town, hobby, fname, lname, email, phone, password) VALUES ('Maria', 'Malmö', 'Gaming' 'Maria', 'Lundberg', 'maria@gmail.com', '123456', '9dc77f50f0cd4a240f64da417026aee60a96732c2b809f49659922098fe3c18b90170ff2b5151a15c493d1550fbc00e8');
-INSERT INTO students (username, town, hobby, fname, lname, email, phone, password) VALUES ('Sara', 'Helsingborg', 'Gym' 'Sara', 'Tveit', 'sara@gmail.com', '123456', '9dc77f50f0cd4a240f64da417026aee60a96732c2b809f49659922098fe3c18b90170ff2b5151a15c493d1550fbc00e8');
+INSERT INTO students (username, town, hobby, fname, lname, email, phone, password) VALUES ('Max', 'Malmö', 'Programming', 'Max', 'Ulfson', 'linus@gmail.com', '123456', '9dc77f50f0cd4a240f64da417026aee60a96732c2b809f49659922098fe3c18b90170ff2b5151a15c493d1550fbc00e8');
+INSERT INTO students (username, town, hobby, fname, lname, email, phone, password) VALUES ('Maria', 'Malmö', 'Gaming', 'Maria', 'Lundberg', 'maria@gmail.com', '123456', '9dc77f50f0cd4a240f64da417026aee60a96732c2b809f49659922098fe3c18b90170ff2b5151a15c493d1550fbc00e8');
+INSERT INTO students (username, town, hobby, fname, lname, email, phone, password) VALUES ('Sara', 'Helsingborg', 'Gym', 'Sara', 'Tveit', 'sara@gmail.com', '123456', '9dc77f50f0cd4a240f64da417026aee60a96732c2b809f49659922098fe3c18b90170ff2b5151a15c493d1550fbc00e8');
 
 INSERT INTO attendance (student_id, course_id) VALUES (1,1);
 INSERT INTO attendance (student_id, course_id) VALUES (1,2);
 INSERT INTO attendance (student_id, course_id) VALUES (2,1);
 INSERT INTO attendance (student_id, course_id) VALUES (3,1);
 
-INSERT INTO teachers (username, town, hobby, fname, lname, email, phone, password, privilage_type) VALUES ('Leif', 'Lund', 'Gym' 'Leif', 'Benkson', 'leif@gmail.com', '123456', '9dc77f50f0cd4a240f64da417026aee60a96732c2b809f49659922098fe3c18b90170ff2b5151a15c493d1550fbc00e8');
-INSERT INTO teachers (username, town, hobby, fname, lname, email, phone, password, privilage_type) VALUES ('Stiv', 'Malmö', 'Gym' 'Stiv', 'Alhamaan', 'stiv@gmail.com', '123456', '9dc77f50f0cd4a240f64da417026aee60a96732c2b809f49659922098fe3c18b90170ff2b5151a15c493d1550fbc00e8');
-INSERT INTO teachers (username, town, hobby, fname, lname, email, phone, password, privilage_type) VALUES ('Rektor', 'Malmö', 'Crossfit' 'Rektor', 'Hard', 'rektor@gmail.com', '123456', '9dc77f50f0cd4a240f64da417026aee60a96732c2b809f49659922098fe3c18b90170ff2b5151a15c493d1550fbc00e8');
+INSERT INTO teachers (username, town, hobby, fname, lname, email, phone, password, privilage_type) VALUES ('Leif', 'Lund', 'Gym', 'Leif', 'Benkson', 'leif@gmail.com', '123456', '9dc77f50f0cd4a240f64da417026aee60a96732c2b809f49659922098fe3c18b90170ff2b5151a15c493d1550fbc00e8', 'user');
+INSERT INTO teachers (username, town, hobby, fname, lname, email, phone, password, privilage_type) VALUES ('Stiv', 'Malmö', 'Gym', 'Stiv', 'Alhamaan', 'stiv@gmail.com', '123456', '9dc77f50f0cd4a240f64da417026aee60a96732c2b809f49659922098fe3c18b90170ff2b5151a15c493d1550fbc00e8', 'admin');
+INSERT INTO teachers (username, town, hobby, fname, lname, email, phone, password, privilage_type) VALUES ('Rektor', 'Malmö', 'Crossfit', 'Rektor', 'Hard', 'rektor@gmail.com', '123456', '9dc77f50f0cd4a240f64da417026aee60a96732c2b809f49659922098fe3c18b90170ff2b5151a15c493d1550fbc00e8', 'superadmin');
 
 INSERT INTO teacher_courses (teachers_id, course_id) VALUES (1,1);
 INSERT INTO teacher_courses (teachers_id, course_id) VALUES (1,2);
