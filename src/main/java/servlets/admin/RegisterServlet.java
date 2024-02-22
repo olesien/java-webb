@@ -145,9 +145,9 @@ public class RegisterServlet extends HttpServlet {
             String username = req.getParameter("teacher_username");
             String password = req.getParameter("teacher_password");
             PrivType priv = PrivType.valueOf(req.getParameter("teacher_priv"));
-            if (user.getPrivType() != PrivType.superadmin && priv == PrivType.superadmin) {
-                //Reset to admin
-                priv = PrivType.admin;
+            if (user.getPrivType() != PrivType.superadmin) {
+                //Reset to user if it's not an admin
+                priv = PrivType.user;
             }
             try {
                 SchoolAdmin.addTeacher(fname, lname, town, hobby, email, phone, username, password, priv);

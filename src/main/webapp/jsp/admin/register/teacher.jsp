@@ -59,6 +59,7 @@
                         <option value="user" selected>User</option>
                         <option value="admin">Admin</option>
                         <c:if test = "${user.privType eq 'superadmin'}">
+                            <option value="admin">Admin</option>
                             <option value="superadmin">Superadmin</option>
                         </c:if>
                     </select><br>
