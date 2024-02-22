@@ -1,4 +1,4 @@
-CREATE SCHEMA `grit` ;
+CREATE SCHEMA `gritacademy` ;
 
 CREATE USER 'grit'@'localhost';
 GRANT SELECT ON gritacademy.* To 'grit'@'localhost' IDENTIFIED BY 'grit';
