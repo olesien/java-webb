@@ -25,7 +25,16 @@ tr:nth-child(even) {
   justify-content: space-around;
   align-items: center;
   padding: 10px 20px;
+  gap: 1rem;
 }
+
+@media (max-width: 800px) {
+    .header {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+}
+
 
 .header nav {
    display: flex;
@@ -37,7 +46,18 @@ tr:nth-child(even) {
 }
 
 .header a {
-   padding: 10px;
+   padding: 5px;
+   margin: 5px;
+   color: black;
+    text-decoration: none;
+}
+
+.header a:hover {
+    color: #3C59FF;
+}
+
+.header a.activeLink {
+    border-bottom: 2px solid #3C59FF;
 }
 
 a.disabled {
@@ -87,4 +107,17 @@ form input[type=submit] {
 
 .text-center {
     text-align: center;
+}
+
+.logo {
+    width: 150px;
+    height: auto;
+}
+
+.p-1 {
+    padding: 1rem;
+}
+
+.p-2 {
+    padding: 2rem;
 }

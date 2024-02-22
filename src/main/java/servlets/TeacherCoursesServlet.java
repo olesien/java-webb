@@ -42,7 +42,7 @@ public class TeacherCoursesServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        req.setAttribute("name", "CourseBean");
+        req.setAttribute("name", "Courses");
         req.setAttribute("courses", courses);
         req.setAttribute("teacher", teacher);
 

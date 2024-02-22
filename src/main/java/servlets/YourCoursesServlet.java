@@ -35,7 +35,7 @@ public class YourCoursesServlet extends HttpServlet {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            req.setAttribute("name", "CourseBean");
+            req.setAttribute("name", "Your Courses");
             req.setAttribute("courses", courses);
 
             // Forward the request to the JSP file
@@ -50,7 +50,7 @@ public class YourCoursesServlet extends HttpServlet {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            req.setAttribute("name", "CourseBean");
+            req.setAttribute("name", "Your Courses");
             req.setAttribute("courses", courses);
 
             // Forward the request to the JSP file

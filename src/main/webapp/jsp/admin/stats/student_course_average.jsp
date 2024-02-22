@@ -1,7 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="models.StudentBean" %>
 <jsp:useBean id="total_courses" scope="request" type="java.lang.Integer"/>
 <html>
 <head>
@@ -11,14 +9,15 @@
 </head>
     <body>
             <jsp:include page='../../fragments/nav.jsp'>
-                <jsp:param name="title" value="Student Course Average"/>
+                <jsp:param name="title" value="Stats"/>
             </jsp:include>
 
              <div class="bar">
               <a class="bar-button selected" href="/stats?type=student_course_average">Student Course Average</a>
               <a class="bar-button" href="/stats?type=course_popularity">Course Popularity</a>
             </div>
-        <div>
+        <main class="p-1">
+            <h3 class="text-center">Student Course Average</h3>
             <c:choose>
                 <c:when test="${not empty students}">
                     <table>
@@ -48,6 +47,6 @@
                 </c:otherwise>
             </c:choose>
 
-        </div>
+        </main>
     </body>
 </html>

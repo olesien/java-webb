@@ -8,7 +8,7 @@
 </head>
     <body>
             <jsp:include page='../../fragments/nav.jsp'>
-                <jsp:param name="title" value="Register Student"/>
+                <jsp:param name="title" value="Register"/>
             </jsp:include>
 
              <div class="bar">
@@ -18,7 +18,8 @@
               <a class="bar-button studentCourseRelationButton" href="/register?type=studentcourserelation">Student Course Relation</a>
                  <a class="bar-button teacherCourseRelationButton" href="/register?type=teachercourserelation">Teacher Course Relation</a>
             </div>
-        <div>
+        <main class="p-1">
+            <h3 class="text-center">Register Student</h3>
             <c:if test="${error_message != null}">
                  <p class="error">${error_message}<p/>
             </c:if>
@@ -53,6 +54,6 @@
                     <input type="submit" value="Submit">
                 </form>
             </div>
-        </div>
+        </main>
     </body>
 </html>

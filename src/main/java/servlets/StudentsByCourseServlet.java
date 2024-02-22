@@ -55,7 +55,7 @@ public class StudentsByCourseServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        req.setAttribute("name", "StudentBean");
+        req.setAttribute("name", "Students");
         req.setAttribute("students", students);
         req.setAttribute("course", course);
 

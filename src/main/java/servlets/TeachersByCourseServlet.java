@@ -62,7 +62,7 @@ public class TeachersByCourseServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        req.setAttribute("name", "TeacherBean");
+        req.setAttribute("name", "Teachers");
         req.setAttribute("teachers", teachers);
         req.setAttribute("course", course);
 

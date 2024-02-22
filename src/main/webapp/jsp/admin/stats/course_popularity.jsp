@@ -8,14 +8,15 @@
 </head>
     <body>
             <jsp:include page='../../fragments/nav.jsp'>
-                <jsp:param name="title" value="Course Popularity"/>
+                <jsp:param name="title" value="Stats"/>
             </jsp:include>
 
              <div class="bar">
               <a class="bar-button" href="/stats?type=student_course_average">Student Course Average</a>
               <a class="bar-button selected" href="/stats?type=course_popularity">Course Popularity</a>
             </div>
-        <div>
+        <main class="p-1">
+            <h3 class="text-center">Course Popularity</h3>
             <c:choose>
                 <c:when test="${not empty courses}">
                     <table>
@@ -41,6 +42,6 @@
                     <p>No courses found.</p>
                 </c:otherwise>
             </c:choose>
-        </div>
+        </main>
     </body>
 </html>

@@ -1,4 +1,4 @@
-package servlets.admin;
+package servlets;
 
 import enums.UserType;
 import models.CourseBean;
@@ -20,20 +20,20 @@ public class CoursesServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserBean user = (UserBean) req.getSession().getAttribute("user");
-        if (user == null) {
-            //We have a user
-            resp.sendRedirect("/login");
-            return;
-        }
-        if (user.getUserType() != UserType.teacher) {
-            //User lacks access.
-            req.setAttribute("message", "Permission Denied");
-            req.setAttribute("code", 403);
-            RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/error.jsp");
-            dispatcher.forward(req, resp);
-            return;
-        }
+//        UserBean user = (UserBean) req.getSession().getAttribute("user");
+//        if (user == null) {
+//            //We have a user
+//            resp.sendRedirect("/login");
+//            return;
+//        }
+//        if (user.getUserType() != UserType.teacher) {
+//            //User lacks access.
+//            req.setAttribute("message", "Permission Denied");
+//            req.setAttribute("code", 403);
+//            RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/error.jsp");
+//            dispatcher.forward(req, resp);
+//            return;
+//        }
 
         ArrayList<CourseBean> courses = null;
         try {

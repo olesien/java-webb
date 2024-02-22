@@ -1,23 +1,22 @@
-<jsp:useBean id="user" scope="session" type="models.UserBean"/>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="header">
-
-      <h2><c:out value="${param.title}"/></h2>
+       <a href="/"><img src="logo.png" class="logo" alt="Grit Logo"/></a>
        <nav>
-           <a href="/your_courses">Your Courses</a>
+           <a href="/courses" class="${param.title == 'Courses' ? "activeLink" : ""}">All Courses</a>
            <c:if test="${not empty sessionScope.user}">
+               <a href="/your_courses" class="${param.title == 'Your Courses' ? "activeLink" : ""}">Your Courses</a>
                <c:choose>
                    <c:when test="${sessionScope.user.userType eq 'teacher'}">
-                       <a href="/students">Students</a>
-                       <a href="/courses">Courses</a>
+                       <a href="/students" class="${param.title == 'Students' ? "activeLink" : ""}">Students</a>
+
                        <c:choose>
                            <c:when test="${sessionScope.user.privType != 'user'}">
-                               <a href="/register?type=student">Register</a>
+                               <a href="/register?type=student" class="${param.title == 'Register' ? "activeLink" : ""}">Register</a>
                            </c:when>
                        </c:choose>
                        <c:choose>
                            <c:when test="${sessionScope.user.privType eq 'superadmin'}">
-                               <a href="/stats?type=student_course_average">Statistics</a>
+                               <a href="/stats?type=student_course_average" class="${param.title == 'Stats' ? "activeLink" : ""}">Statistics</a>
                            </c:when>
                        </c:choose>
                    </c:when>
@@ -25,7 +24,6 @@
                <form action="/logout" method="POST">
                    <input type="submit" value="Logout">
                </form>
-               <a href="/user">${sessionScope.user.username}</a>
 
            </c:if>
            <c:if test="${empty sessionScope.user}">
