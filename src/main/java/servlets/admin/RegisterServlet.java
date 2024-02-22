@@ -7,6 +7,7 @@ import models.StudentBean;
 import models.TeacherBean;
 import models.UserBean;
 import models.db.SchoolAPI;
+import models.db.SchoolAdmin;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -122,7 +123,7 @@ public class RegisterServlet extends HttpServlet {
             String password = req.getParameter("password");
 
             try {
-                SchoolAPI.addStudent(fname,lname, town, hobby, email, phone, username, password);
+                SchoolAdmin.addStudent(fname,lname, town, hobby, email, phone, username, password);
                 req.setAttribute("success_message", "Student successfully added!");
                 RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/student.jsp");
                 dispatcher.forward(req, resp);
@@ -149,7 +150,7 @@ public class RegisterServlet extends HttpServlet {
                 priv = PrivType.admin;
             }
             try {
-                SchoolAPI.addTeacher(fname, lname, town, hobby, email, phone, username, password, priv);
+                SchoolAdmin.addTeacher(fname, lname, town, hobby, email, phone, username, password, priv);
                 req.setAttribute("success_message", "Teacher successfully added!");
                 RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/teacher.jsp");
                 dispatcher.forward(req, resp);
@@ -165,8 +166,10 @@ public class RegisterServlet extends HttpServlet {
             String description = req.getParameter("course_description");
             String yhp = req.getParameter("course_yhp");
             try {
-                SchoolAPI.addCourse(name, description, Integer.valueOf(yhp));
-                resp.sendRedirect("/students?status=success");
+                SchoolAdmin.addCourse(name, description, Integer.valueOf(yhp));
+                req.setAttribute("success_message", "Course successfully added!");
+                RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/course.jsp");
+                dispatcher.forward(req, resp);
             } catch (SQLException e) {
                 req.setAttribute("error_message", e.getMessage());
                 RequestDispatcher dispatcher = req.getRequestDispatcher("./jsp/admin/register/course.jsp");
@@ -177,7 +180,7 @@ public class RegisterServlet extends HttpServlet {
             Integer student_id = Integer.valueOf(req.getParameter("courserelation_student"));
             Integer course_id = Integer.valueOf(req.getParameter("courserelation_course"));
             try {
-                SchoolAPI.addStudentCourseRelation(student_id, course_id);
+                SchoolAdmin.addStudentCourseRelation(student_id, course_id);
                 req.setAttribute("success_message", "Student Course Relation successfully added!");
                 getStudentCourseRelation(req, resp);
             } catch (SQLException e) {
@@ -189,7 +192,7 @@ public class RegisterServlet extends HttpServlet {
             Integer teacher_id = Integer.valueOf(req.getParameter("courserelation_teacher"));
             Integer course_id = Integer.valueOf(req.getParameter("courserelation_course"));
             try {
-                SchoolAPI.addTeacherCourseRelation(teacher_id, course_id);
+                SchoolAdmin.addTeacherCourseRelation(teacher_id, course_id);
                 req.setAttribute("success_message", "Teacher Course Relation successfully added!");
                 getTeacherCourseRelation(req, resp);
             } catch (SQLException e) {

@@ -5,24 +5,24 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class Database {
+public class DatabaseAdmin {
     /*
         models.db.Database Configuration
      */
     static String url = "localhost";
     static int port = 3307;
     static String database = "gritacademy";
-    static String username = "grituser";
-    static String password = "grituser";
+    static String username = "grit";
+    static String password = "grit";
 
     /*
         Private variables
      */
-    private static Database db;
+    private static DatabaseAdmin db;
 
     private MysqlDataSource dataSource;
 
-    private Database() { }
+    private DatabaseAdmin() { }
 
     private void initializeDataSource() {
         //try {
@@ -45,7 +45,7 @@ public class Database {
 
     public static Connection getConnection() {
         if (db == null) {
-            db = new Database();
+            db = new DatabaseAdmin();
             db.initializeDataSource();
         }
         return db.createConnection();

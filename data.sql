@@ -6,6 +6,9 @@ GRANT INSERT ON gritacademy.* To 'grit'@'localhost' IDENTIFIED BY 'grit';
 GRANT UPDATE ON gritacademy.* To 'grit'@'localhost' IDENTIFIED BY 'grit';
 GRANT DELETE ON gritacademy.* To 'grit'@'localhost' IDENTIFIED BY 'grit';
 
+CREATE USER 'grituser'@'localhost';
+GRANT SELECT ON gritacademy.* To 'grituser'@'localhost' IDENTIFIED BY 'grituser';
+
 CREATE TABLE students (
    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
    name VARCHAR(100) NOT NULL,
