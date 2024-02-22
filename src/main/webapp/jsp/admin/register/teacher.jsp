@@ -57,7 +57,6 @@
                     <label for="teacher_priv">Privilege Type:</label><br>
                     <select name="teacher_priv" id="teacher_priv">
                         <option value="user" selected>User</option>
-                        <option value="admin">Admin</option>
                         <c:if test = "${user.privType eq 'superadmin'}">
                             <option value="admin">Admin</option>
                             <option value="superadmin">Superadmin</option>
