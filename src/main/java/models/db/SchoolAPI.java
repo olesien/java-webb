@@ -36,7 +36,7 @@ public class SchoolAPI {
     public static ArrayList<StudentWithCountBean> getStudentsWithCount(Integer total_courses) throws SQLException {
         ArrayList<StudentWithCountBean> students = new ArrayList<>();
         Statement statement = Database.getConnection().createStatement();
-        String query = "SELECT s.id, s.town, s.hobby, s.lname, s.fname, s.email, s.username, COUNT(a.id) as count FROm students s INNER JOIN attendance a ON a.student_id = s.id GROUP BY s.id ORDER BY count DESC";
+        String query = "SELECT s.id, s.town, s.hobby, s.lname, s.fname, s.email, s.username, COUNT(a.id) as count FROm students s LEFT JOIN attendance a ON a.student_id = s.id GROUP BY s.id ORDER BY count DESC";
         System.out.println(query);
         ResultSet result = statement.executeQuery(query);
         while (result.next()) {
@@ -139,7 +139,7 @@ public class SchoolAPI {
     public static ArrayList<CourseWithPopularityBean> getCoursesByPopularity() throws SQLException {
         ArrayList<CourseWithPopularityBean> courses = new ArrayList<>();
         Statement statement = Database.getConnection().createStatement();
-        String query = "SELECT c.id, c.name, c.description, c.yhp, COUNT(a.id) as popularity FROM courses c INNER JOIN attendance a ON a.course_id = c.id GROUP BY c.id ORDER BY popularity DESC";
+        String query = "SELECT c.id, c.name, c.description, c.yhp, COUNT(a.id) as popularity FROM courses c LEFT JOIN attendance a ON a.course_id = c.id GROUP BY c.id ORDER BY popularity DESC";
         System.out.println(query);
         ResultSet result = statement.executeQuery(query);
         while (result.next()) {
